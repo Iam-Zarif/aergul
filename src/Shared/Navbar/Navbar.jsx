@@ -1,4 +1,5 @@
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
 import profile from "../../../public/navbar/profile.webp";
@@ -8,6 +9,7 @@ import "./navbar.css";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
+  const location = useLocation(); // Get the current location
 
   const toggleSearch = () => {
     setShowSearch(true);
@@ -34,6 +36,12 @@ const Navbar = () => {
     };
   }, [showSearch]);
 
+  // Check if the current pathname is "/login"
+  const isLoginPage = location.pathname === "/login";
+
+  // Don't render the Navbar if on the login page
+  if (isLoginPage) return null;
+
   return (
     <div className="w-full shadow-sm naav shadow-gray-900">
       <div className="2xl:max-w-[95rem] w-full xl:max-w-[80rem] px-6 mx-auto">
@@ -53,22 +61,18 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className=" hidden lg:flex text-[14px] items-center text-white">
-            <div className="flex w-full flex-col  px-10 gap-1 items-center">
-              <p className=" font-extrabold">Home</p>
+          <div className="hidden lg:flex text-[14px] items-center text-white">
+            <div className="flex w-full flex-col px-10 gap-1 items-center">
+              <p className="font-extrabold">Home</p>
             </div>
-            <div className="flex w-full flex-col  px-10 gap-1 items-center">
-              <p className=" font-light">Collections</p>
+            <div className="flex w-full flex-col px-10 gap-1 items-center">
+              <p className="font-light">Collections</p>
             </div>
-            <div className="flex gap-1 flex-nowrap flex-col  px-10 flex-1 w-full items-center">
-              <p className=" w-full text-nowrap font-light">
-                About us
-              </p>
+            <div className="flex gap-1 flex-nowrap flex-col px-10 flex-1 w-full items-center">
+              <p className="w-full text-nowrap font-light">About us</p>
             </div>
-            <div className="flex gap-1 flex-nowrap flex-col  px-10 flex-1 w-full items-center">
-              <p className=" w-full text-nowrap font-light">
-                Contact us
-              </p>
+            <div className="flex gap-1 flex-nowrap flex-col px-10 flex-1 w-full items-center">
+              <p className="w-full text-nowrap font-light">Contact us</p>
             </div>
           </div>
 

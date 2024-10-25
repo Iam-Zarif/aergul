@@ -1,9 +1,18 @@
+import { useLocation } from "react-router-dom"; // Import useLocation
+import "./footer.css";
 
-import "./footer.css"
 const Footer = () => {
+  const location = useLocation(); // Get the current location
+
+  // Check if the current pathname is "/login"
+  const isLoginPage = location.pathname === "/login";
+
+  // Don't render the Footer if on the login page
+  if (isLoginPage) return null;
+
   return (
     <div>
-      <footer className="footer foot mx-auto w-full flex items-center justify-evenly   text-white  p-10">
+      <footer className="footer foot mx-auto w-full flex items-center justify-evenly text-white p-10">
         <hr />
         <nav>
           <h6 className="footer-title">Services</h6>
@@ -42,7 +51,7 @@ const Footer = () => {
           </fieldset>
         </form>
       </footer>
-      <footer className="footer bg-gray-600 footer-center  text-white p-4">
+      <footer className="footer bg-gray-600 footer-center text-white p-4">
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All right reserved by ACME
@@ -52,6 +61,6 @@ const Footer = () => {
       </footer>
     </div>
   );
-}
+};
 
-export default Footer
+export default Footer;
