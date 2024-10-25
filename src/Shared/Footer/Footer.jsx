@@ -3,7 +3,7 @@ import "./footer.css"
 const Footer = () => {
   return (
     <div>
-      <footer className="footer foot mx-auto w-full flex items-center justify-evenly mt-28  text-white  p-10">
+      <footer className="footer foot mx-auto w-full flex items-center justify-evenly   text-white  p-10">
         <hr />
         <nav>
           <h6 className="footer-title">Services</h6>

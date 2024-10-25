@@ -8,7 +8,7 @@ import "./HomeGalary.css"
 
 const HomeGalary = () => {
   return (
-    <div className="mt-16 galary pb-12  pt-10">
+    <div className="mt-16 galary pb-24  pt-10">
       <div className="flex items-center flex-col gap-2">
         <p className="text-lg font-extrabold text-gray-300">
           Share your setup with
