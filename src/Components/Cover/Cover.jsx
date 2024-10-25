@@ -16,7 +16,7 @@ import "./Cover.css"
 
 const Cover = () => {
   return (
-    <div className="h-[95vh]  w-full ">
+    <div className="h-full  w-full ">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

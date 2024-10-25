@@ -2,3 +2,17 @@
     background: rgb(88, 86, 235);
 background: linear-gradient(90deg, #7743DB 0%, #5725E5 87%);
 }
+
+.search-animation {
+  animation: expandSearch 0.5s ease-in-out forwards;
+  width: 0; /* Initial width */
+}
+
+@keyframes expandSearch {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 20rem; /* Final width */
+  }
+}
