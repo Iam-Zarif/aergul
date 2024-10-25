@@ -45,7 +45,7 @@ const Cover = () => {
                 alt=""
               />
               <div className="flex mt-[8rem] ml-8 flex-col items-start gap-5">
-                <p className="text-8xl title text-[#1d016b]">
+                <p className="text-8xl title text-indigo-950">
                   Discover the Finest Kameez Collection
                 </p>
                 <p className="text-2xl font-semibold w-[50rem]">
@@ -54,7 +54,7 @@ const Cover = () => {
                   perfect for every occasion, crafted with care to enhance your
                   look.
                 </p>
-                <button className="bg-[#1d016b] group  text-white  px-8 py-3 rounded-xl ml-1 mt-10">
+                <button className="bg-indigo-950 group  text-white  px-8 py-3 rounded-xl ml-1 mt-10">
                   <div className="flex items-center gap-3">
                     {" "}
                     <span>Shop Now</span>
@@ -79,7 +79,7 @@ const Cover = () => {
                 alt=""
               />
               <div className="flex mt-[8rem] ml-8 flex-col items-start gap-5">
-                <p className="text-8xl title text-[#1d016b]">
+                <p className="text-8xl title text-indigo-950">
                   Discover the Finest Kameez Collection
                 </p>
                 <p className="text-2xl font-semibold w-[50rem]">
@@ -88,7 +88,7 @@ const Cover = () => {
                   perfect for every occasion, crafted with care to enhance your
                   look.
                 </p>
-                <button className="bg-[#1d016b] group  text-white  px-8 py-3 rounded-xl ml-1 mt-10">
+                <button className="bg-indigo-950 group  text-white  px-8 py-3 rounded-xl ml-1 mt-10">
                   <div className="flex items-center gap-3">
                     {" "}
                     <span>Shop Now</span>
@@ -113,7 +113,7 @@ const Cover = () => {
                 alt=""
               />
               <div className="flex mt-[8rem] ml-8 flex-col items-start gap-5">
-                <p className="text-8xl title text-[#1d016b]">
+                <p className="text-8xl title text-indigo-950">
                   Discover the Latest Arrival Kameez Collection
                 </p>
                 <p className="text-2xl font-semibold w-[50rem]">
@@ -122,7 +122,7 @@ const Cover = () => {
                   perfect for every occasion, crafted with care to enhance your
                   look.
                 </p>
-                <button className="bg-[#1d016b] group  text-white  px-8 py-3 rounded-xl ml-1 mt-10">
+                <button className="bg-indigo-950 group  text-white  px-8 py-3 rounded-xl ml-1 mt-10">
                   <div className="flex items-center gap-3">
                     {" "}
                     <span>Shop Now</span>

@@ -43,7 +43,7 @@ const Navbar = () => {
               <img
                 className="rounded-lg object"
                 src={logo}
-                width={75}
+                width={60}
                 loading="lazy"
                 alt="Logo"
               />
@@ -53,16 +53,21 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className=" hidden lg:flex text-[16px] items-center text-white">
-            <div className="flex w-full flex-col  px-8 gap-1 items-center">
+          <div className=" hidden lg:flex text-[14px] items-center text-white">
+            <div className="flex w-full flex-col  px-10 gap-1 items-center">
               <p className=" font-extrabold">Home</p>
             </div>
-            <div className="flex w-full flex-col  px-8 gap-1 items-center">
+            <div className="flex w-full flex-col  px-10 gap-1 items-center">
               <p className=" font-light">Collections</p>
             </div>
-            <div className="flex gap-1 flex-nowrap flex-col  px-8 flex-1 w-full items-center">
+            <div className="flex gap-1 flex-nowrap flex-col  px-10 flex-1 w-full items-center">
               <p className=" w-full text-nowrap font-light">
                 About us
+              </p>
+            </div>
+            <div className="flex gap-1 flex-nowrap flex-col  px-10 flex-1 w-full items-center">
+              <p className=" w-full text-nowrap font-light">
+                Contact us
               </p>
             </div>
           </div>

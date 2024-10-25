@@ -1,0 +1,30 @@
+.galary {
+  position: relative; /* Position relative for pseudo-elements */
+  background: rgb(168, 167, 245);
+  background: linear-gradient(90deg, rgba(210, 209, 241, 0.116) 0%, rgba(62, 59, 101, 0.117) 87%);
+  height: 100%; /* Adjust height as needed */
+  width: 100%; /* Adjust width as needed */
+  overflow: hidden; /* Hide overflow to prevent shadow from spilling */
+}
+
+.galary::before,
+.galary::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50px; /* Height of the shadow area */
+  background: white; /* Background color to match your design */
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2); /* Shadow effect */
+  pointer-events: none; /* Ignore mouse events */
+}
+
+.galary::before {
+  top: -50px; /* Move the top shadow above */
+  filter: blur(10px); /* Optional: add blur effect */
+}
+
+.galary::after {
+  bottom: -50px; /* Move the bottom shadow below */
+  filter: blur(10px); /* Optional: add blur effect */
+}

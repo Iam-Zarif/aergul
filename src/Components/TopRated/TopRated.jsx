@@ -1,22 +1,24 @@
 
+
+
 import photo from "../../../public/newitems/photo.jpg";
 import photo1 from "../../../public/newitems/photo2.jpg";
 import photo2 from "../../../public/newitems/photo3.jpg";
 import photo3 from "../../../public/newitems/photo4.jpg";
 import photo4 from "../../../public/newitems/sample.jpg";
 import arrow from "../../../public/newitems/down-arrow.png";
-const SpecialOffer = () => {
+const TopRated = () => {
   return (
     <div className="mt-16">
       <p className="text-center text-2xl font-extrabold text-gray-500">
-        Special offers
+        Top Rated
       </p>
 
       <div>
         <div className="flex mt-8  items-center justify-center mx-auto gap-6">
           <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-yellow-700 text-white">
-              Luxury
+            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs  font-bold rounded-full bg-green-700 shadow-md shadow-gray-500 text-white">
+              5/5
             </div>
             <figure className="w-full relative">
               <img
@@ -49,8 +51,8 @@ const SpecialOffer = () => {
             </div>
           </div>
           <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-green-700 text-white">
-              Regular
+            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs  font-bold rounded-full bg-green-700 shadow-md shadow-gray-500 text-white">
+              5/5
             </div>
             <figure className="w-full relative">
               <img
@@ -83,8 +85,8 @@ const SpecialOffer = () => {
             </div>
           </div>
           <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-gray-200 text-black">
-              Elegent
+            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs  font-bold rounded-full bg-green-700 shadow-md shadow-gray-500 text-white">
+              4.8/5
             </div>
             <figure className="w-full relative">
               <img
@@ -117,8 +119,8 @@ const SpecialOffer = () => {
             </div>
           </div>
           <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-gray-700 text-white">
-              Casual
+            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs  font-bold rounded-full bg-green-700 shadow-md shadow-gray-500 text-white">
+              5/5
             </div>
             <figure className="w-full relative">
               <img
@@ -164,6 +166,10 @@ const SpecialOffer = () => {
       </button>
     </div>
   );
-}
+};
 
-export default SpecialOffer
+export default TopRated;
+
+
+
+// TopRated
