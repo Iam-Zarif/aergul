@@ -1,0 +1,6 @@
+.login{
+   background: rgb(70,6,113);
+background: linear-gradient(90deg, rgb(182, 120, 223) 0%, rgb(103, 111, 193) 50%, rgb(80, 73, 146) 100%);
+height: 100vh;
+width: 100%;
+}
