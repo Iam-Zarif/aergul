@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom"; // Import useLocation
+import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
 import profile from "../../../public/navbar/profile.webp";
@@ -107,13 +107,15 @@ const Navbar = () => {
               width={20}
               alt="Cart"
             />
-            <img
-              src={profile}
-              loading="lazy"
-              className="block border rounded-full object-cover object-top"
-              width={34}
-              alt="Profile"
-            />
+            <Link to="/login">
+              <img
+                src={profile}
+                loading="lazy"
+                className="block border rounded-full object-cover object-top"
+                width={34}
+                alt="Profile"
+              />
+            </Link>
           </div>
         </div>
       </div>
