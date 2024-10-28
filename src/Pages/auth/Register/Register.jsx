@@ -7,11 +7,11 @@ import cancel from "../../../../public/auth/register/cancel.png";
 import check from "../../../../public/auth/register/check.png";
 import select from "../../../../public/auth/register/select.png";
 import pass from "../../../../public/auth/login/pass.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [preview, setPreview] = useState(null);
-
+const navigate = useNavigate();
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -156,6 +156,7 @@ const Register = () => {
 
             {/* Submit Button */}
             <button
+            onClick={() => navigate("/auth/register/otp")}
               type="submit"
               className="w-full text-white bg-indigo-900 px-10 py-2.5 rounded-lg hover:bg-indigo-800"
             >

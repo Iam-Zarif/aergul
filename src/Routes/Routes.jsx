@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/auth/Login/Login";
 import Register from "../Pages/auth/Register/Register";
 import Layout from "../Pages/auth/Layout";
+import RegisterOtp from "../Pages/auth/Register/RegisterOtp/RegisterOtp";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
         children: [
           { path: "/auth/login", element: <Login /> },
           { path: "/auth/register", element: <Register /> },
+          { path: "/auth/register/otp", element: <RegisterOtp /> },
         ],
       },
     ],

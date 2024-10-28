@@ -4,9 +4,12 @@ import "./footer.css";
 const Footer = () => {
   const location = useLocation(); 
 
-  const isAuthPage = ["/auth/login", "/auth/register", "/auth/forgot-password"].includes(
-    location.pathname
-  );
+  const isAuthPage = [
+    "/auth/login",
+    "/auth/register",
+    "/auth/forgot-password",
+    "/auth/register/otp",
+  ].includes(location.pathname);
 
   if (isAuthPage) return null;
 

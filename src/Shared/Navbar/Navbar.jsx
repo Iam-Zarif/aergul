@@ -36,9 +36,12 @@ const Navbar = () => {
   }, [showSearch]);
 
 
-  const isAuthPage = ["/auth/login", "/auth/register", "/auth/forgot-password"].includes(
-    location.pathname
-  );
+  const isAuthPage = [
+    "/auth/login",
+    "/auth/register",
+    "/auth/forgot-password",
+    "/auth/register/otp",
+  ].includes(location.pathname);
 
   // Don't render the Navbar if on the login page
   if (isAuthPage) return null;
