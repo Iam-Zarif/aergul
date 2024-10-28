@@ -10,7 +10,7 @@ const Login = () => {
     <div>
       <img src={gif} loading="lazy" width={100} alt="" className="mx-auto" />
       <p className="text-center font-bold text-2xl">Login</p>
-      <p className="text-center text-gray-400 ">
+      <p className="text-center  text-gray-400 ">
         Dive into the world with best fabrics
       </p>
 
@@ -20,7 +20,7 @@ const Login = () => {
             <div className="relative w-full">
               <input
                 type="email"
-                className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-500"
+                className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-400"
                 name=""
                 id=""
                 placeholder="Enter you email"
@@ -36,7 +36,7 @@ const Login = () => {
               <div className="relative w-full">
                 <input
                   type="password"
-                  className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-500"
+                  className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-400"
                   name=""
                   id=""
                   placeholder="Enter you Password"
@@ -62,7 +62,7 @@ const Login = () => {
               Login
             </button>{" "}
           </div>
-          <div className="flex mt-1 justify-start mr-auto items-center gap-2">
+          <div className="flex mt-1 ml-1 justify-start mr-auto items-center gap-2">
             <input type="checkbox" name="" id="" />
             <p className="text-sm">Remmeber me</p>
           </div>
