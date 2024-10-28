@@ -20,7 +20,7 @@ const Login = () => {
             <div className="relative w-full">
               <input
                 type="email"
-                className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-indigo-900"
+                className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-500"
                 name=""
                 id=""
                 placeholder="Enter you email"
@@ -36,7 +36,7 @@ const Login = () => {
               <div className="relative w-full">
                 <input
                   type="password"
-                  className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-indigo-900"
+                  className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-500"
                   name=""
                   id=""
                   placeholder="Enter you Password"
