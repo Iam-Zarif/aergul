@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import back from "../../../../../public/common/back.png";
+import { Link } from "react-router-dom";
 
 const RegisterOtp = () => {
   const inputs = useRef([]);
@@ -53,7 +55,17 @@ const RegisterOtp = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex relative flex-col items-center gap-8">
+      <Link to="/auth/register">
+        {" "}
+        <img
+          src={back}
+          width={20}
+          loading="lazy"
+          className="absolute cursor-pointer top-0 left-0"
+          alt=""
+        />
+      </Link>
       <p className="text-center font-bold text-2xl">Enter your OTP</p>
       <p className="text-sm text-center text-gray-500">
         Enter OTP sent to abc*******.com

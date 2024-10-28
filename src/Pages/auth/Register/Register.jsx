@@ -7,6 +7,7 @@ import cancel from "../../../../public/auth/register/cancel.png";
 import check from "../../../../public/auth/register/check.png";
 import select from "../../../../public/auth/register/select.png";
 import pass from "../../../../public/auth/login/pass.png";
+
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -35,7 +36,8 @@ const navigate = useNavigate();
   };
 
   return (
-    <div>
+    <div className="relative">
+     
       <img src={gif} loading="lazy" width={100} alt="" className="mx-auto" />
       <p className="text-center font-bold text-2xl">Register</p>
       <p className="text-center text-gray-400 ">
@@ -45,7 +47,6 @@ const navigate = useNavigate();
       <div className="flex w-full mt-8 flex-col items-center gap-4">
         <form className="w-full flex flex-col items-center ">
           <div className="flex w-full flex-col items-center gap-3">
-         
             <div className="relative w-full">
               <input
                 type="text"
@@ -156,7 +157,7 @@ const navigate = useNavigate();
 
             {/* Submit Button */}
             <button
-            onClick={() => navigate("/auth/register/otp")}
+              onClick={() => navigate("/auth/register/otp")}
               type="submit"
               className="w-full text-white bg-indigo-900 px-10 py-2.5 rounded-lg hover:bg-indigo-800"
             >
