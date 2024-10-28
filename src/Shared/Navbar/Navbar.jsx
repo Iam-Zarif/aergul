@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
+import { Link, useLocation } from "react-router-dom"; 
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
 import profile from "../../../public/navbar/profile.webp";
@@ -9,13 +9,12 @@ import "./navbar.css";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
-  const location = useLocation(); // Get the current location
+  const location = useLocation(); 
 
   const toggleSearch = () => {
     setShowSearch(true);
   };
 
-  // Close search input when clicking outside
   const handleClickOutside = (event) => {
     if (
       searchInputRef.current &&
@@ -36,11 +35,13 @@ const Navbar = () => {
     };
   }, [showSearch]);
 
-  // Check if the current pathname is "/login"
-  const isLoginPage = location.pathname === "/login";
+
+  const isAuthPage = ["/auth/login", "/auth/register", "/auth/forgot-password"].includes(
+    location.pathname
+  );
 
   // Don't render the Navbar if on the login page
-  if (isLoginPage) return null;
+  if (isAuthPage) return null;
 
   return (
     <div className="w-full shadow-sm naav shadow-gray-900">
@@ -107,7 +108,7 @@ const Navbar = () => {
               width={20}
               alt="Cart"
             />
-            <Link to="/login">
+            <Link to="/auth/login">
               <img
                 src={profile}
                 loading="lazy"

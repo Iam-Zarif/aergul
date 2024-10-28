@@ -1,14 +1,14 @@
-import { useLocation } from "react-router-dom"; // Import useLocation
+import { useLocation } from "react-router-dom"; 
 import "./footer.css";
 
 const Footer = () => {
-  const location = useLocation(); // Get the current location
+  const location = useLocation(); 
 
-  // Check if the current pathname is "/login"
-  const isLoginPage = location.pathname === "/login";
+  const isAuthPage = ["/auth/login", "/auth/register", "/auth/forgot-password"].includes(
+    location.pathname
+  );
 
-  // Don't render the Footer if on the login page
-  if (isLoginPage) return null;
+  if (isAuthPage) return null;
 
   return (
     <div>
