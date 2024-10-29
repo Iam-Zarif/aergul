@@ -8,11 +8,12 @@ import check from "../../../../public/auth/register/check.png";
 import cross from "../../../../public/auth/register/cross.png";
 import select from "../../../../public/auth/register/select.png";
 import pass from "../../../../public/auth/login/pass.png";
-import { Link } from "react-router-dom";
-  import Cookies from 'js-cookie';
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
   const [name, setName] = useState("");
   const [emailValue, setEmailValue] = useState("");
@@ -20,13 +21,15 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // State for success messages
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const previewUrl = URL.createObjectURL(file);
       setPreview(previewUrl);
-      setSelectedFile(file); // Store the actual file for uploading
+      setSelectedFile(file);
     }
   };
 
@@ -50,6 +53,8 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setErrorMessage(""); // Reset error message
+    setSuccessMessage(""); // Reset success message
 
     let uploadedImageUrl = null;
     if (selectedFile) {
@@ -63,26 +68,39 @@ const Register = () => {
       photo: uploadedImageUrl,
     };
 
-   try {
-  const response = await axios.post(
-    "http://localhost:3000/auth/register",
-    userData
-  );
-  console.log(response);
-  localStorage.setItem('token', response.data.token);
-  sessionStorage.setItem('token', response.data.token);
-  Cookies.set('token', response.data.token);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/register", 
+        userData
+      );
+      console.log(response)
+      if (response.status === 201) {
+        localStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("token", response.data.token);
+        Cookies.set("token", response.data.token);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.token}`;
 
-} 
- catch (error) {
-      console.error(error || "Registration failed");
+        setSuccessMessage("Account created successfully!"); 
+        setTimeout(() => {
+          navigate("/auth/login");
+        }, 2000);
+      }
+      else if(response.status === 400){
+        setErrorMessage("Email already exists!");
+      }
+      else if(response.status === 429){
+        setErrorMessage("Too many requests. Please try again later.");
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("Registration failed! Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Function to check if passwords match
   const passwordsMatch =
     password && confirmPassword && password === confirmPassword;
 
@@ -233,28 +251,31 @@ const Register = () => {
 
             <button
               type="submit"
-              className="w-full text-white bg-indigo-900 h-10 rounded-lg hover:bg-indigo-800"
+              className={`w-full text-sm text-white h-10 rounded-lg  ${
+                loading
+                  ? "bg-indigo-900"
+                  : successMessage
+                  ? "bg-green-600"
+                  : errorMessage
+                  ? "bg-red-600"
+                  : "bg-indigo-900"
+              }`}
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 mx-auto border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 mx-auto border-gray-200 border-t-transparent rounded-full animate-spin"></div>
               ) : (
-                <>Verify</>
+                successMessage || errorMessage || "Create an Account"
               )}
             </button>
           </div>
         </form>
 
-        <div>
-          <p className="text-sm">
-            Don&apos;t have an account?{" "}
-            <Link
-              to="/auth/login"
-              className="font-bold text-blue-900 cursor-pointer underline"
-            >
-              Login
-            </Link>
-          </p>
-        </div>
+        <p className="text-sm text-gray-400">
+          Already have an account?{" "}
+          <Link to="/auth/login" className="text-indigo-900 font-bold">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
