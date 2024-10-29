@@ -14,7 +14,7 @@ const NewArrival = () => {
           New Arrival
         </p>
       </div>
-      <div className="flex  mt-8 items-center justify-center mx-auto gap-6">
+      <div className="flex lg:flex-row flex-col  mt-8 items-center justify-center mx-auto gap-6">
         <div className="card relative glass w-80">
           <div className="absolute -top-3 -right-3 h-10 w-10 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-green-700 text-white">
             -15%
@@ -131,7 +131,7 @@ const NewArrival = () => {
         </div>
       </div>
 
-      <div className="mt-16 justify-center w-ful] px-5 mx-auto flex items-center gap-6 w-full">
+      <div className="mt-16 lg:flex-row flex-col justify-center w-ful] px-5 mx-auto flex items-center gap-6 w-full">
         <div className="card w-full card-side bg-base-100 shadow-xl h-[35rem] ">
           <figure>
             <img
@@ -221,7 +221,13 @@ const NewArrival = () => {
       </div>
       <button className="flex items-center justify-center mx-auto mt-14 bg-gray-200 px-6 py-2.5 text-indigo-950 rounded-lg gap-2">
         <span className="font-bold opacity-70">Explore more</span>
-        <img src={arrow} loading="lazy" className="animate-bounce" width={14} alt="" />
+        <img
+          src={arrow}
+          loading="lazy"
+          className="animate-bounce"
+          width={14}
+          alt=""
+        />
       </button>
     </div>
   );

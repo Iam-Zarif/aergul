@@ -47,7 +47,7 @@ const Navbar = () => {
   if (isAuthPage) return null;
 
   return (
-    <div className="w-full shadow-sm naav shadow-gray-900">
+    <div className="w-full fixed top-0 z-[99999] shadow-sm naav shadow-gray-900">
       <div className="2xl:max-w-[95rem] w-full xl:max-w-[80rem] px-6 mx-auto">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-5">

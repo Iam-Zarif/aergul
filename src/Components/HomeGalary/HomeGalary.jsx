@@ -45,7 +45,7 @@ const HomeGalary = () => {
             className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
           />
         </div>
-        <div className="col-span-3 row-span-6 row-start-1">
+        <div className="col-span-4 row-span-6 row-start-1">
           <img
             alt="image"
             src={photo4}

@@ -13,7 +13,7 @@ const SpecialOffer = () => {
       </p>
 
       <div>
-        <div className="flex mt-8  items-center justify-center mx-auto gap-6">
+        <div className="flex mt-8  lg:flex-row flex-col items-center justify-center mx-auto gap-6">
           <div className="card relative glass w-80">
             <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-yellow-700 text-white">
               Luxury
