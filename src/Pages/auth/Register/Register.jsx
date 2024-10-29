@@ -5,53 +5,109 @@ import user from "../../../../public/auth/register/user.png";
 import edit from "../../../../public/auth/register/edit.png";
 import cancel from "../../../../public/auth/register/cancel.png";
 import check from "../../../../public/auth/register/check.png";
+import cross from "../../../../public/auth/register/cross.png";
 import select from "../../../../public/auth/register/select.png";
 import pass from "../../../../public/auth/login/pass.png";
-
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+  import Cookies from 'js-cookie';
+import axios from "axios";
 
 const Register = () => {
   const [preview, setPreview] = useState(null);
-const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [emailValue, setEmailValue] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const previewUrl = URL.createObjectURL(file);
       setPreview(previewUrl);
-      console.log("Selected file:", file);
+      setSelectedFile(file); // Store the actual file for uploading
     }
   };
 
-  const handleDivClick = () => {
-    document.getElementById("fileInput").click();
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default");
+
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/dr5jpj9qs/image/upload`,
+        formData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
+    }
   };
 
-  const handleEditClick = () => {
-    handleDivClick(); // Trigger the file input to select a new image
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    let uploadedImageUrl = null;
+    if (selectedFile) {
+      uploadedImageUrl = await uploadImageToCloudinary(selectedFile);
+    }
+
+    const userData = {
+      name,
+      email: emailValue,
+      password,
+      photo: uploadedImageUrl,
+    };
+
+   try {
+  const response = await axios.post(
+    "http://localhost:3000/auth/register",
+    userData
+  );
+  console.log(response);
+  localStorage.setItem('token', response.data.token);
+  sessionStorage.setItem('token', response.data.token);
+  Cookies.set('token', response.data.token);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+
+} 
+ catch (error) {
+      console.error(error || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleRemoveClick = (event) => {
-    event.stopPropagation(); // Prevents opening the file selector
-    setPreview(null); // Clear the preview
-  };
+  // Function to check if passwords match
+  const passwordsMatch =
+    password && confirmPassword && password === confirmPassword;
 
   return (
     <div className="relative">
-     
       <img src={gif} loading="lazy" width={100} alt="" className="mx-auto" />
       <p className="text-center font-bold text-2xl">Register</p>
-      <p className="text-center text-gray-400 ">
-        Explore the world with best fabrics
+      <p className="text-center text-gray-400">
+        Explore the world with the best fabrics
       </p>
 
       <div className="flex w-full mt-8 flex-col items-center gap-4">
-        <form className="w-full flex flex-col items-center ">
+        <form
+          className="w-full flex flex-col items-center"
+          onSubmit={handleSubmit}
+        >
           <div className="flex w-full flex-col items-center gap-3">
             <div className="relative w-full">
               <input
                 type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-400"
                 placeholder="Enter your Name"
+                required
               />
               <img
                 src={user}
@@ -63,8 +119,11 @@ const navigate = useNavigate();
             <div className="relative w-full">
               <input
                 type="email"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
                 className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-400"
                 placeholder="Enter your email"
+                required
               />
               <img
                 src={email}
@@ -76,8 +135,11 @@ const navigate = useNavigate();
             <div className="relative w-full">
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full h-10 px-9 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-400"
                 placeholder="Enter your Password"
+                required
               />
               <img
                 src={pass}
@@ -89,8 +151,11 @@ const navigate = useNavigate();
             <div className="relative w-full">
               <input
                 type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full h-10 pr-4 pl-14 placeholder:text-sm font-light rounded-lg focus:outline-none border border-gray-400"
                 placeholder="Confirm your Password"
+                required
               />
               <img
                 src={pass}
@@ -98,16 +163,25 @@ const navigate = useNavigate();
                 width={18}
                 alt=""
               />
-              <img
-                src={check}
-                className="absolute z-[9999] top-2.5 left-8"
-                width={18}
-                alt=""
-              />
+              {passwordsMatch ? (
+                <img
+                  src={check}
+                  className="absolute z-[9999] top-2.5 left-8"
+                  width={18}
+                  alt="Match"
+                />
+              ) : (
+                <img
+                  src={cross}
+                  className="absolute z-[9999] top-2.5 left-8"
+                  width={18}
+                  alt="Not Match"
+                />
+              )}
             </div>
             <div
               className="w-full border border-gray-400 rounded-lg p-2.5 cursor-pointer flex items-center relative justify-start"
-              onClick={handleDivClick}
+              onClick={() => document.getElementById("fileInput").click()}
             >
               <div className="w-full flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -121,7 +195,9 @@ const navigate = useNavigate();
                       width={17}
                       loading="lazy"
                       alt="Edit"
-                      onClick={handleEditClick}
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
                       className="cursor-pointer"
                     />
                     <img
@@ -130,7 +206,7 @@ const navigate = useNavigate();
                       width={18}
                       loading="lazy"
                       alt="Remove"
-                      onClick={handleRemoveClick}
+                      onClick={() => setPreview(null)}
                     />
                   </div>
                 )}
@@ -147,21 +223,23 @@ const navigate = useNavigate();
               </div>
             )}
 
-            {/* Hidden file input */}
             <input
               type="file"
               id="fileInput"
               style={{ display: "none" }}
               onChange={handleFileChange}
+              accept="image/*"
             />
 
-            {/* Submit Button */}
             <button
-              onClick={() => navigate("/auth/register/otp")}
               type="submit"
-              className="w-full text-white bg-indigo-900 px-10 py-2.5 rounded-lg hover:bg-indigo-800"
+              className="w-full text-white bg-indigo-900 h-10 rounded-lg hover:bg-indigo-800"
             >
-              Verify
+              {loading ? (
+                <div className="w-5 h-5 border-2 mx-auto border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                <>Verify</>
+              )}
             </button>
           </div>
         </form>

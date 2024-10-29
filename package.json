@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.21.0",
     "@smastrom/react-rating": "^1.5.0",
+    "axios": "^1.7.7",
+    "js-cookie": "^3.0.5",
     "localforage": "^1.10.0",
     "match-sorter": "^7.0.0",
     "react": "^18.3.1",
