@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import gif from "../../../../public/auth/register/register.gif";
 import email from "../../../../public/auth/login/mail.png";
 import user from "../../../../public/auth/register/user.png";
@@ -8,12 +8,17 @@ import check from "../../../../public/auth/register/check.png";
 import cross from "../../../../public/auth/register/cross.png";
 import select from "../../../../public/auth/register/select.png";
 import pass from "../../../../public/auth/login/pass.png";
+import google from "../../../../public/auth/login/google.png";
+import facebook from "../../../../public/auth/login/facebook.png";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { local } from "../../../Api/LocalApi";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const Register = () => {
   const navigate = useNavigate();
+    const { googleSignIn, facebookSignIn } = useContext(AuthContext);
   const [preview, setPreview] = useState(null);
   const [name, setName] = useState("");
   const [emailValue, setEmailValue] = useState("");
@@ -23,6 +28,69 @@ const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); // State for success messages
+    const handleFacebook = () => {
+      facebookSignIn()
+        .then((res) => {
+          const user = res.user;
+          console.log(user);
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        })
+        .catch((err) => console.error(err));
+    };
+   const handleGoogle = async () => {
+     try {
+       const res = await googleSignIn();
+       const user = res.user;
+
+       const userData = {
+         name: user.displayName, // Name from Google
+         email: user.email, // Email from Google
+         photo: user.photoURL, // Profile photo from Google
+         password: "", // Password is not required for Google sign-in
+       };
+
+       // Call your register API with the user data
+       const response = await axios.post(`${local}/auth/register`, userData);
+
+       // Handle the response
+       if (response.status === 201) {
+         localStorage.setItem("token", response.data.token);
+         sessionStorage.setItem("token", response.data.token);
+         Cookies.set("token", response.data.token);
+         axios.defaults.headers.common[
+           "Authorization"
+         ] = `Bearer ${response.data.token}`;
+
+         // Optional: Show success message and navigate
+         setSuccessMessage("Account created successfully!");
+         setTimeout(() => {
+           navigate("/");
+         }, 2000);
+       } else if (response.status === 400) {
+         setErrorMessage("Email already exists!");
+       } else if (response.status === 429) {
+         setErrorMessage("Too many requests. Please try again later.");
+       }
+     } catch (error) {
+       // Handle the error response
+       if (error.response) {
+         // The request was made and the server responded with a status code
+         if (error.response.status === 400) {
+           setErrorMessage("Email already exists!");
+         } else if (error.response.status === 429) {
+           setErrorMessage("Too many requests. Please try again later.");
+         } else {
+           setErrorMessage("Registration failed! Please try again.");
+         }
+       } else {
+         // Something happened in setting up the request that triggered an Error
+         setErrorMessage("Registration failed! Please try again.");
+       }
+     }
+   };
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -69,10 +137,7 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/register", 
-        userData
-      );
+      const response = await axios.post(`${local}/auth/register`, userData);
       console.log(response)
       if (response.status === 201) {
         localStorage.setItem("token", response.data.token);
@@ -267,6 +332,26 @@ const Register = () => {
                 successMessage || errorMessage || "Create an Account"
               )}
             </button>
+          </div>
+          <div className="flex items-center w-full gap-1">
+            <div className="w-full h-[1px] bg-gray-400"></div>
+            <p className="text-sm text-gray-400">OR</p>
+            <div className="w-full h-[1px] bg-gray-400"></div>
+          </div>
+          <div className="flex items-center gap-4 mt-4 justify-center w-full ">
+            {" "}
+            <div
+              onClick={handleGoogle}
+              className="rounded-full bg-gradient-to-r  shadow-sm shadow-white border justify-center cursor-pointer text-sm  flex items-center gap-2"
+            >
+              <img src={google} width={28} loading="lazy" alt="" />
+            </div>
+            <div
+              onClick={handleFacebook}
+              className="rounded-full bg-gradient-to-r  shadow-sm shadow-white border justify-center cursor-pointer text-sm  flex items-center gap-2 "
+            >
+              <img src={facebook} width={32} loading="lazy" alt="" />
+            </div>
           </div>
         </form>
 

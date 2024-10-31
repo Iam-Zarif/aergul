@@ -2,14 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom"; 
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
-import profile from "../../../public/navbar/profile.webp";
+import Profile from "../../../public/navbar/profile.webp";
+import profileArrow from "../../../public/navbar/profileArrow.png";
 import cart from "../../../public/navbar/cart.png";
 import "./navbar.css";
+import { useProfile } from "../../ProfileProvider/ProfileProvider";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
   const location = useLocation(); 
+  const { profile } = useProfile();
+  console.log("Profile got",profile)
 
   const toggleSearch = () => {
     setShowSearch(true);
@@ -47,25 +51,23 @@ const Navbar = () => {
   if (isAuthPage) return null;
 
   return (
-    <div className="w-full fixed top-0 z-[99999] shadow-sm naav shadow-gray-900">
+    <div className="w-full fixed top-0 z-[99999] shadow-sm bg-white shadow-gray-300">
       <div className="2xl:max-w-[95rem] w-full xl:max-w-[80rem] px-6 mx-auto">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-5">
             <div className="flex items-center">
               <img
-                className="rounded-lg object"
+                className="rounded-lg bg-indigo-950 object"
                 src={logo}
                 width={60}
                 loading="lazy"
                 alt="Logo"
               />
-              <p className="text-white -ml-2 font-sans font-extrabold text-xl">
-                ergul
-              </p>
+              <p className=" ml-1 font-sans font-extrabold text-xl">ergul</p>
             </div>
           </div>
 
-          <div className="hidden lg:flex text-[14px] items-center text-white">
+          <div className="hidden lg:flex text-[14px] items-center ">
             <div className="flex w-full flex-col px-10 gap-1 items-center">
               <p className="font-extrabold">Home</p>
             </div>
@@ -88,7 +90,7 @@ const Navbar = () => {
                   src={searchIcon}
                   loading="lazy"
                   className="block cursor-pointer"
-                  width={19}
+                  width={20}
                   alt="Search"
                   onClick={toggleSearch}
                 />
@@ -98,7 +100,7 @@ const Navbar = () => {
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search..."
-                  className={`absolute -top-[1.2rem] rounded-lg right-8 bg-gray-800 text-white border-b font-light border-gray-600 outline-none px-3 h-10 transition-all duration-500 ease-in-out search-animation`}
+                  className={`absolute -top-[1.2rem] rounded-lg right-8 bg-gray-800  border-b font-light border-gray-600 outline-none px-3 h-10 transition-all duration-500 ease-in-out search-animation`}
                   autoFocus
                 />
               )}
@@ -108,18 +110,23 @@ const Navbar = () => {
               src={cart}
               loading="lazy"
               className="block cursor-pointer"
-              width={20}
+              width={24}
               alt="Cart"
             />
-            <Link to="/auth/login">
-              <img
-                src={profile}
-                loading="lazy"
-                className="block border rounded-full object-cover object-top"
-                width={34}
-                alt="Profile"
-              />
-            </Link>
+            <div className="relative cursor-pointer w-9 h-9">
+              <Link to="/auth/login">
+                <img
+                  src={Profile}
+                  loading="lazy"
+                  className="block border w-full h-full rounded-full object-cover object-top"
+                  width={34}
+                  alt="Profile"
+                />
+              </Link>
+              <div className="absolute -bottom-2 border rounded-full  p-1 z-[99999] -right-1 bg-white">
+                <img src={profileArrow} className=" " width={10} alt="" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

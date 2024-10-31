@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import gif from "../../../../public/auth/login/login.gif";
@@ -7,6 +7,8 @@ import pass from "../../../../public/auth/login/pass.png";
 import google from "../../../../public/auth/login/google.png";
 import facebook from "../../../../public/auth/login/facebook.png";
 import Cookies from "js-cookie";
+import { local } from "../../../Api/LocalApi";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const Login = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -15,6 +17,67 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState(""); // Added success message state
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { googleSignIn, facebookSignIn } = useContext(AuthContext);
+
+  const handleFacebook = () => {
+    facebookSignIn()
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      })
+      .catch((err) => console.error(err));
+  };
+ const handleGoogle = async () => {
+   try {
+     const res = await googleSignIn();
+     const user = res.user;
+     console.log(user);
+
+     const userData = {
+       email: user.email, // Email from Google
+       password: "", // No password is needed for Google sign-in
+     };
+
+     const response = await axios.post(`${local}/auth/login`, userData);
+console.log(response)
+     if (response.status === 201) {
+       localStorage.setItem("token", response.data.token);
+       sessionStorage.setItem("token", response.data.token);
+       Cookies.set("token", response.data.token);
+       axios.defaults.headers.common[
+         "Authorization"
+       ] = `Bearer ${response.data.token}`;
+
+       setSuccessMessage("Redirecting...");
+       setTimeout(() => {
+         navigate("/");
+       }, 2000);
+     }
+     if (response.status === 404) {
+      setErrorMessage("Email not found");
+       console.log("Email not found."); 
+     } else {
+       console.log(response.data.message || "Login failed");
+     }
+   } catch (error) {
+     console.error(error);
+     if (error.response) {
+       if (error.response.status === 400) {
+         console.log("Invalid email or password!"); // Customize message for 400 error
+       } else if (error.response.status === 429) {
+         console.log("Too many requests.");
+       } else {
+         console.log(error.response.data.message || "Login failed");
+       }
+     } else {
+       console.log("Server error.");
+     }
+   }
+ };
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,13 +86,13 @@ const Login = () => {
     setSuccessMessage(""); // Reset success message on new attempt
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post(`${local}/auth/login`, {
         email: emailValue,
         password: passwordValue,
       });
       console.log(response);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         localStorage.setItem("token", response.data.token);
         sessionStorage.setItem("token", response.data.token);
         Cookies.set("token", response.data.token);
@@ -42,11 +105,7 @@ const Login = () => {
         setTimeout(() => {
           navigate("/");
         }, 2000);
-      } else if (response.status === 400) {
-        setErrorMessage("Email already exists!");
-      } else if (response.status === 429) {
-        setErrorMessage("Too many requests. Please try again later.");
-      } else {
+      }  else {
         setErrorMessage(response.data.message || "Login failed");
       }
     } catch (error) {
@@ -144,13 +203,20 @@ const Login = () => {
           <p className="text-sm text-gray-400">OR</p>
           <div className="w-full h-[1px] bg-gray-400"></div>
         </div>
-        <div className="rounded-full border justify-center cursor-pointer text-sm border-gray-400 px-4 py-1.5 flex items-center gap-2 w-full">
-          <img src={google} width={16} loading="lazy" alt="" />
-          <p>Login with Google</p>
-        </div>
-        <div className="rounded-full border justify-center cursor-pointer text-sm border-gray-400 px-4 py-1.5 flex items-center gap-2 w-full">
-          <img src={facebook} width={18} loading="lazy" alt="" />
-          <p>Login with Facebook</p>
+        <div className="flex items-center gap-4 justify-center w-full ">
+          {" "}
+          <div
+            onClick={handleGoogle}
+            className="rounded-full bg-gradient-to-r  shadow-sm shadow-white border justify-center cursor-pointer text-sm  flex items-center gap-2"
+          >
+            <img src={google} width={28} loading="lazy" alt="" />
+          </div>
+          <div
+            onClick={handleFacebook}
+            className="rounded-full bg-gradient-to-r  shadow-sm shadow-white border justify-center cursor-pointer text-sm  flex items-center gap-2 "
+          >
+            <img src={facebook} width={32} loading="lazy" alt="" />
+          </div>
         </div>
         <div>
           <p className="text-sm">

@@ -6,7 +6,7 @@ import HomeGallery from "../../Components/HomeGalary/HomeGalary";
 
 const Home = () => {
   return (
-    <div>
+    <div className="mt-14">
       <Cover />
       <NewArrival />
       <SpecialOffer />
