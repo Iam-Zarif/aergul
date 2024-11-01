@@ -7,6 +7,7 @@ import './index.css'
 import {  RouterProvider } from "react-router-dom";
 import { router } from './Routes/Routes';
 import AuthProvider from './AuthProvider/AuthProvider';
+import { ProfileProvider } from './ProfileProvider/ProfileProvider';
 
 
 
@@ -14,7 +15,9 @@ import AuthProvider from './AuthProvider/AuthProvider';
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ProfileProvider>
+        <RouterProvider router={router} />
+      </ProfileProvider>
     </AuthProvider>
   </StrictMode>
 );

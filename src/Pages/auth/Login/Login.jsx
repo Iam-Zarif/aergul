@@ -30,53 +30,52 @@ const Login = () => {
       })
       .catch((err) => console.error(err));
   };
- const handleGoogle = async () => {
-   try {
-     const res = await googleSignIn();
-     const user = res.user;
-     console.log(user);
+const handleGoogle = async () => {
+  try {
+    const res = await googleSignIn();
+    const user = res.user;
+    console.log(user);
 
-     const userData = {
-       email: user.email, // Email from Google
-       password: "", // No password is needed for Google sign-in
-     };
+    const userData = {
+      email: user.email, // Email from Google
+      password: "", // No password is needed for Google sign-in
+    };
 
-     const response = await axios.post(`${local}/auth/login`, userData);
-console.log(response)
-     if (response.status === 201) {
-       localStorage.setItem("token", response.data.token);
-       sessionStorage.setItem("token", response.data.token);
-       Cookies.set("token", response.data.token);
-       axios.defaults.headers.common[
-         "Authorization"
-       ] = `Bearer ${response.data.token}`;
+    const response = await axios.post(`${local}/auth/login`, userData);
+    console.log(response);
 
-       setSuccessMessage("Redirecting...");
-       setTimeout(() => {
-         navigate("/");
-       }, 2000);
-     }
-     if (response.status === 404) {
-      setErrorMessage("Email not found");
-       console.log("Email not found."); 
-     } else {
-       console.log(response.data.message || "Login failed");
-     }
-   } catch (error) {
-     console.error(error);
-     if (error.response) {
-       if (error.response.status === 400) {
-         console.log("Invalid email or password!"); // Customize message for 400 error
-       } else if (error.response.status === 429) {
-         console.log("Too many requests.");
-       } else {
-         console.log(error.response.data.message || "Login failed");
-       }
-     } else {
-       console.log("Server error.");
-     }
-   }
- };
+    if (response.status === 201) {
+      localStorage.setItem("token", response.data.token);
+      sessionStorage.setItem("token", response.data.token);
+      Cookies.set("token", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+
+      setSuccessMessage("Redirecting...");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      if (error.response.status === 404) {
+        setErrorMessage("Email not found");
+        console.log("Email not found.");
+      } else if (error.response.status === 400) {
+        console.log("Invalid email or password!"); // Customize message for 400 error
+      } else if (error.response.status === 429) {
+        console.log("Too many requests.");
+      } else {
+        console.log(error.response.data.message || "Login failed");
+      }
+    } else {
+      console.log("Server error.");
+    }
+  }
+};
+
 
 
   const handleLogin = async (e) => {

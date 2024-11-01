@@ -68,24 +68,18 @@ const Register = () => {
          setTimeout(() => {
            navigate("/");
          }, 2000);
-       } else if (response.status === 400) {
-         setErrorMessage("Email already exists!");
-       } else if (response.status === 429) {
+       }  else if (response.status === 429) {
          setErrorMessage("Too many requests. Please try again later.");
        }
      } catch (error) {
        // Handle the error response
        if (error.response) {
-         // The request was made and the server responded with a status code
-         if (error.response.status === 400) {
-           setErrorMessage("Email already exists!");
-         } else if (error.response.status === 429) {
+          if (error.response.status === 429) {
            setErrorMessage("Too many requests. Please try again later.");
          } else {
            setErrorMessage("Registration failed! Please try again.");
          }
        } else {
-         // Something happened in setting up the request that triggered an Error
          setErrorMessage("Registration failed! Please try again.");
        }
      }
