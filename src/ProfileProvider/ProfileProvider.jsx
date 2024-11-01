@@ -1,4 +1,5 @@
-import  { createContext, useState, useContext, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { local } from "../Api/LocalApi";
 
@@ -8,24 +9,34 @@ export const useProfile = () => useContext(ProfileContext);
 
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [profileError, setProfileError] = useState(null);
 
   const fetchProfile = async () => {
-    setLoading(true);
-    setError(null);
+    setProfileLoading(true);
+    setProfileError(null);
 
     try {
       const response = await axios.get(`${local}/user/profile`, {
         withCredentials: true,
       });
-      setProfile(response?.data?.user); // Set profile data
-      console.log("Fetched profile:", response?.data?.user); // Log the data for verification
+      setProfile(response?.data?.user);
+      console.log("Fetched profile:", response?.data?.user);
+
+      const currentPathname = window.location.pathname;
+
+      if (
+        response?.data?.user &&
+        (currentPathname === "/auth/login" ||
+          currentPathname === "/auth/register")
+      ) {
+        window.location.href = "/";
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch profile");
+      setProfileError(err.response?.data?.message || "Failed to fetch profile");
       console.error("Error fetching profile:", err);
     } finally {
-      setLoading(false);
+      setProfileLoading(false);
     }
   };
 
@@ -35,8 +46,8 @@ export const ProfileProvider = ({ children }) => {
 
   const value = {
     profile,
-    loading,
-    error,
+    profileLoading,
+    profileError,
     refetchProfile: fetchProfile,
   };
 

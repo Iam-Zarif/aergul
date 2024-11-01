@@ -15,9 +15,9 @@ import { ProfileProvider } from './ProfileProvider/ProfileProvider';
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <ProfileProvider>
+    <ProfileProvider>
         <RouterProvider router={router} />
-      </ProfileProvider>
+    </ProfileProvider>
     </AuthProvider>
   </StrictMode>
 );

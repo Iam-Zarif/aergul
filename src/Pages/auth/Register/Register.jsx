@@ -18,7 +18,7 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const Register = () => {
   const navigate = useNavigate();
-    const { googleSignIn, facebookSignIn } = useContext(AuthContext);
+  const { googleSignIn, facebookSignIn } = useContext(AuthContext);
   const [preview, setPreview] = useState(null);
   const [name, setName] = useState("");
   const [emailValue, setEmailValue] = useState("");
@@ -28,63 +28,60 @@ const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); // State for success messages
-    const handleFacebook = () => {
-      facebookSignIn()
-        .then((res) => {
-          const user = res.user;
-          console.log(user);
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        })
-        .catch((err) => console.error(err));
-    };
-   const handleGoogle = async () => {
-     try {
-       const res = await googleSignIn();
-       const user = res.user;
+  const handleFacebook = () => {
+    facebookSignIn()
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      })
+      .catch((err) => console.error(err));
+  };
+  const handleGoogle = async () => {
+    try {
+      const res = await googleSignIn();
+      const user = res.user;
 
-       const userData = {
-         name: user.displayName, // Name from Google
-         email: user.email, // Email from Google
-         photo: user.photoURL, // Profile photo from Google
-         password: "", // Password is not required for Google sign-in
-       };
+      const userData = {
+        name: user.displayName, // Name from Google
+        email: user.email, // Email from Google
+        photo: user.photoURL, // Profile photo from Google
+        password: "", // Password is not required for Google sign-in
+      };
 
-       // Call your register API with the user data
-       const response = await axios.post(`${local}/auth/register`, userData);
-
-       // Handle the response
-       if (response.status === 201) {
-         localStorage.setItem("token", response.data.token);
-         sessionStorage.setItem("token", response.data.token);
-         Cookies.set("token", response.data.token);
-         axios.defaults.headers.common[
-           "Authorization"
-         ] = `Bearer ${response.data.token}`;
-
-         // Optional: Show success message and navigate
-         setSuccessMessage("Account created successfully!");
-         setTimeout(() => {
-           navigate("/");
-         }, 2000);
-       }  else if (response.status === 429) {
-         setErrorMessage("Too many requests. Please try again later.");
-       }
-     } catch (error) {
-       // Handle the error response
-       if (error.response) {
-          if (error.response.status === 429) {
-           setErrorMessage("Too many requests. Please try again later.");
-         } else {
-           setErrorMessage("Registration failed! Please try again.");
-         }
-       } else {
-         setErrorMessage("Registration failed! Please try again.");
-       }
-     }
-   };
-
+      // Call your register API with the user data
+      const response = await axios.post(`${local}/auth/register`, userData);
+      localStorage.setItem("token", response.data.token);
+      sessionStorage.setItem("token", response.data.token);
+      Cookies.set("token", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+      // Handle the response
+      if (response.status === 201) {
+        setSuccessMessage("Account created successfully!");
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 2000);
+      } else if (response.status === 429) {
+        setErrorMessage("Too many requests. Please try again later.");
+      }
+    } catch (error) {
+      // Handle the error response
+      if (error.response) {
+        if (error.response.status === 429) {
+          setErrorMessage("Too many requests. Please try again later.");
+        } else {
+          setErrorMessage("Registration failed! Please try again.");
+        }
+      } else {
+        setErrorMessage("Registration failed! Please try again.");
+      }
+    }
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -132,7 +129,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(`${local}/auth/register`, userData);
-      console.log(response)
+      console.log(response);
       if (response.status === 201) {
         localStorage.setItem("token", response.data.token);
         sessionStorage.setItem("token", response.data.token);
@@ -141,15 +138,13 @@ const Register = () => {
           "Authorization"
         ] = `Bearer ${response.data.token}`;
 
-        setSuccessMessage("Account created successfully!"); 
+        setSuccessMessage("Account created successfully!");
         setTimeout(() => {
           navigate("/auth/login");
         }, 2000);
-      }
-      else if(response.status === 400){
+      } else if (response.status === 400) {
         setErrorMessage("Email already exists!");
-      }
-      else if(response.status === 429){
+      } else if (response.status === 429) {
         setErrorMessage("Too many requests. Please try again later.");
       }
     } catch (error) {

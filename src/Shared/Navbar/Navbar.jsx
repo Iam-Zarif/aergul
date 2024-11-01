@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom"; 
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
-import Profile from "../../../public/navbar/profile.webp";
+import blankUser from "../../../public/navbar/blackUser.png";
 import profileArrow from "../../../public/navbar/profileArrow.png";
 import cart from "../../../public/navbar/cart.png";
 import "./navbar.css";
@@ -116,7 +116,7 @@ const Navbar = () => {
             <div className="relative cursor-pointer w-9 h-9">
               <Link to="/auth/login">
                 <img
-                  src={Profile}
+                  src={profile?.profilePhoto || blankUser}
                   loading="lazy"
                   className="block border w-full h-full rounded-full object-cover object-top"
                   width={34}
