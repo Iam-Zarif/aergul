@@ -5,13 +5,21 @@ import Login from "../Pages/auth/Login/Login";
 import Register from "../Pages/auth/Register/Register";
 import Layout from "../Pages/auth/Layout";
 import RegisterOtp from "../Pages/auth/Register/RegisterOtp/RegisterOtp";
+import { ProfileProvider } from "../ProfileProvider/ProfileProvider";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <Home /> },
+      {
+        path: "/",
+        element: (
+          <ProfileProvider>
+            <Home />
+          </ProfileProvider>
+        ),
+      },
       {
         path: "/auth",
         element: <Layout />,

@@ -12,6 +12,15 @@ export const ProfileProvider = ({ children }) => {
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileError, setProfileError] = useState(null);
 
+  const publicRoutes = [
+    "/auth/login",
+    "/auth/register",
+    "/auth/register-otp",
+    "/auth/reset-password-email",
+    "/auth/reset-password-otp",
+    "/auth/reset-password-setPassword",
+  ];
+
   const fetchProfile = async () => {
     setProfileLoading(true);
     setProfileError(null);
@@ -20,21 +29,23 @@ export const ProfileProvider = ({ children }) => {
       const response = await axios.get(`${local}/user/profile`, {
         withCredentials: true,
       });
-      setProfile(response?.data?.user);
-      console.log("Fetched profile:", response?.data?.user);
-
+      const user = response?.data?.user;
+      setProfile(user);
       const currentPathname = window.location.pathname;
 
-      if (
-        response?.data?.user &&
-        (currentPathname === "/auth/login" ||
-          currentPathname === "/auth/register")
-      ) {
+      if (user && publicRoutes.includes(currentPathname)) {
         window.location.href = "/";
+      } else if (!user && !publicRoutes.includes(currentPathname)) {
+        window.location.href = "/auth/login";
       }
     } catch (err) {
       setProfileError(err.response?.data?.message || "Failed to fetch profile");
       console.error("Error fetching profile:", err);
+
+      const currentPathname = window.location.pathname;
+      if (!publicRoutes.includes(currentPathname)) {
+        window.location.href = "/auth/login";
+      }
     } finally {
       setProfileLoading(false);
     }
@@ -50,6 +61,8 @@ export const ProfileProvider = ({ children }) => {
     profileError,
     refetchProfile: fetchProfile,
   };
+
+  if (profileLoading) return <div>Loading...</div>;
 
   return (
     <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
