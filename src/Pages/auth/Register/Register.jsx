@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { local } from "../../../Api/LocalApi";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { api } from "../../../Api/BaseApi";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Register = () => {
       };
 
       // Call your register API with the user data
-      const response = await axios.post(`${local}/auth/register`, userData);
+      const response = await axios.post(`${api}/auth/register`, userData);
       localStorage.setItem("token", response.data.token);
       sessionStorage.setItem("token", response.data.token);
       Cookies.set("token", response.data.token);
