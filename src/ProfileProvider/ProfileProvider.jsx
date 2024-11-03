@@ -2,7 +2,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { local } from "../Api/LocalApi";
-import { api } from "../Api/BaseApi";
 
 const ProfileContext = createContext();
 
@@ -27,7 +26,7 @@ export const ProfileProvider = ({ children }) => {
     setProfileError(null);
 
     try {
-      const response = await axios.get(`${api}/user/profile`, {
+      const response = await axios.get(`${local}/user/profile`, {
         withCredentials: true,
       });
       const user = response?.data?.user;

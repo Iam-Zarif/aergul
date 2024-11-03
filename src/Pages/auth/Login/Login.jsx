@@ -9,7 +9,6 @@ import facebook from "../../../../public/auth/login/facebook.png";
 import Cookies from "js-cookie";
 import { local } from "../../../Api/LocalApi";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
-import { api } from "../../../Api/BaseApi";
 
 const Login = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -42,10 +41,10 @@ const handleGoogle = async () => {
       password: "", // No password is needed for Google sign-in
     };
 
-    const response = await axios.post(`${api}/auth/login`, userData);
+    const response = await axios.post(`${local}/auth/google/login`, userData);
     console.log(response);
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       localStorage.setItem("token", response.data.token);
       sessionStorage.setItem("token", response.data.token);
       Cookies.set("token", response.data.token);
@@ -55,7 +54,7 @@ const handleGoogle = async () => {
 
       setSuccessMessage("Redirecting...");
       setTimeout(() => {
-        navigate("/");
+        window.location.href = "/";
       }, 2000);
     }
   } catch (error) {

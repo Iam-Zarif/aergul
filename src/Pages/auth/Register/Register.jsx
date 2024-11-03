@@ -15,7 +15,6 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { local } from "../../../Api/LocalApi";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
-import { api } from "../../../Api/BaseApi";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,6 +28,7 @@ const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); // State for success messages
+  
   const handleFacebook = () => {
     facebookSignIn()
       .then((res) => {
@@ -53,7 +53,11 @@ const Register = () => {
       };
 
       // Call your register API with the user data
-      const response = await axios.post(`${api}/auth/register`, userData);
+      const response = await axios.post(
+        `${local}/auth/google/register`,
+        userData
+      );
+      console.log(response)
       localStorage.setItem("token", response.data.token);
       sessionStorage.setItem("token", response.data.token);
       Cookies.set("token", response.data.token);
@@ -132,16 +136,17 @@ const Register = () => {
       const response = await axios.post(`${local}/auth/register`, userData);
       console.log(response);
       if (response.status === 201) {
-        localStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("token", response.data.token);
-        Cookies.set("token", response.data.token);
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.token}`;
+       
 
-        setSuccessMessage("Account created successfully!");
+        setSuccessMessage("Verifying...");
         setTimeout(() => {
-          navigate("/auth/login");
+          navigate("/auth/register/otp", {
+            state: {
+              maskedEmail: response.data.email,
+              email:userData.email,
+              otp: response.data.otp,
+            },
+          });
         }, 2000);
       } else if (response.status === 400) {
         setErrorMessage("Email already exists!");
