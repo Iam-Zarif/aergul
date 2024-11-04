@@ -7,8 +7,10 @@ const Footer = () => {
   const isAuthPage = [
     "/auth/login",
     "/auth/register",
-    "/auth/forgot-password",
+    "/auth/forgotPass/emailRecap",
     "/auth/register/otp",
+    "/auth/forgotPass/verify-otp",
+    "/auth/forgotPass/confirmPass",
   ].includes(location.pathname);
 
   if (isAuthPage) return null;

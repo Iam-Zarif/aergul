@@ -28,7 +28,7 @@ const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); // State for success messages
-  
+
   const handleFacebook = () => {
     facebookSignIn()
       .then((res) => {
@@ -139,6 +139,7 @@ const Register = () => {
        
 
         setSuccessMessage("Verifying...");
+        
         setTimeout(() => {
           navigate("/auth/register/otp", {
             state: {
@@ -148,6 +149,7 @@ const Register = () => {
             },
           });
         }, 2000);
+
       } else if (response.status === 400) {
         setErrorMessage("Email already exists!");
       } else if (response.status === 429) {

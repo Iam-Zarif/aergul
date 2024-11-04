@@ -161,7 +161,7 @@ const handleGoogle = async () => {
                 />
               </div>
               <Link
-                to="/forgot-password"
+                to="/auth/forgotPass/emailRecap"
                 className="text-sm mt-1 ml-1 font-light hover:underline transition-all duration-500"
               >
                 Forgot Password?

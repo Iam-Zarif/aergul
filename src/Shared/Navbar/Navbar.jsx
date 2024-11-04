@@ -45,6 +45,9 @@ const Navbar = () => {
     "/auth/register",
     "/auth/forgot-password",
     "/auth/register/otp",
+    "/auth/forgotPass/emailRecap",
+    "/auth/forgotPass/verify-otp",
+    "/auth/forgotPass/confirmPass",
   ].includes(location.pathname);
 
   // Don't render the Navbar if on the login page
