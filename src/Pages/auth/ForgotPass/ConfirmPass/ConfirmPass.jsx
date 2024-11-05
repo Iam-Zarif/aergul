@@ -14,22 +14,11 @@ const ConfirmPass = () => {
   const navigate = useNavigate();
   const { email, otp } = location.state || {};
 
-  // Define a regex pattern for password complexity
-  // const passwordRegex =
-  //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-
-    // if (!passwordRegex.test(password)) {
-    //   setError(
-    //     "Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character."
-    //   );
-    //   return;
-    // }
 
     setLoading(true);
     setError("");

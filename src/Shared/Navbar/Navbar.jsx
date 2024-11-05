@@ -7,13 +7,18 @@ import profileArrow from "../../../public/navbar/profileArrow.png";
 import cart from "../../../public/navbar/cart.png";
 import "./navbar.css";
 import { useProfile } from "../../ProfileProvider/ProfileProvider";
+import NavProfileClick from "../Popups/NavProfileClick/NavProfileClick";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
+  const [dropDown, setDropDown] = useState(false);
   const location = useLocation(); 
   const { profile } = useProfile();
-  console.log("Profile got",profile)
+
+  const handleDropdown = () => {
+    setDropDown(!dropDown);
+  };
 
   const toggleSearch = () => {
     setShowSearch(true);
@@ -71,22 +76,33 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex text-[14px] items-center ">
-            <div className="flex w-full flex-col px-10 gap-1 items-center">
+            <Link
+              to="/"
+              className="flex bg-gray-100 py-5 w-full flex-col px-10 gap-1 items-center"
+            >
               <p className="font-extrabold">Home</p>
-            </div>
-            <div className="flex w-full flex-col px-10 gap-1 items-center">
+            </Link>
+            <Link
+              to="/collections"
+              className="flex py-5 w-full flex-col px-10 gap-1 items-center"
+            >
               <p className="font-light">Collections</p>
-            </div>
-            <div className="flex gap-1 flex-nowrap flex-col px-10 flex-1 w-full items-center">
+            </Link>
+            <Link
+              to="/about"
+              className="flex gap-1 flex-nowrap py-5 flex-col px-10 flex-1 w-full items-center"
+            >
               <p className="w-full text-nowrap font-light">About us</p>
-            </div>
-            <div className="flex gap-1 flex-nowrap flex-col px-10 flex-1 w-full items-center">
+            </Link>
+            <Link
+              to="/contact"
+              className="flex gap-1 flex-nowrap py-5 flex-col px-10 flex-1 w-full items-center"
+            >
               <p className="w-full text-nowrap font-light">Contact us</p>
-            </div>
+            </Link>
           </div>
 
           <div className="flex items-center gap-8 relative">
-            {/* Search Icon and Transition Input */}
             <div className="relative">
               {!showSearch && (
                 <img
@@ -116,19 +132,29 @@ const Navbar = () => {
               width={24}
               alt="Cart"
             />
-            <div className="relative cursor-pointer w-9 h-9">
-              <Link to="/auth/login">
-                <img
-                  src={profile?.profilePhoto || blankUser}
-                  loading="lazy"
-                  className="block border w-full h-full rounded-full object-cover object-top"
-                  width={34}
-                  alt="Profile"
-                />
-              </Link>
+            <div
+              onClick={handleDropdown}
+              className="relative cursor-pointer w-9 h-9"
+            >
+              <img
+                src={profile?.profilePhoto || blankUser}
+                loading="lazy"
+                className="block border w-full h-full rounded-full object-cover object-top"
+                width={34}
+                alt="Profile"
+              />
               <div className="absolute -bottom-2 border rounded-full  p-1 z-[99999] -right-1 bg-white">
                 <img src={profileArrow} className=" " width={10} alt="" />
               </div>
+              {dropDown && (
+                <>
+                  <NavProfileClick
+                    profile={profile}
+                    blankUser={blankUser}
+                    onClose={handleDropdown}
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
