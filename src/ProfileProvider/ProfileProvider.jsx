@@ -19,7 +19,6 @@ export const ProfileProvider = ({ children }) => {
     "/auth/reset-password-email",
     "/auth/reset-password-otp",
     "/auth/reset-password-setPassword",
-    "/"
   ];
 
   const fetchProfile = async () => {
@@ -36,15 +35,17 @@ export const ProfileProvider = ({ children }) => {
 
       if (user && publicRoutes.includes(currentPathname)) {
         window.location.href = "/";
-      } 
-      else if(!user && publicRoutes.includes(currentPathname)){
+      } else if (!user && !publicRoutes.includes(currentPathname)) {
         window.location.href = "/auth/login";
       }
     } catch (err) {
       setProfileError(err.response?.data?.message || "Failed to fetch profile");
       console.error("Error fetching profile:", err);
-   
-     
+
+      const currentPathname = window.location.pathname;
+      if (!publicRoutes.includes(currentPathname)) {
+        window.location.href = "/auth/login";
+      }
     } finally {
       setProfileLoading(false);
     }

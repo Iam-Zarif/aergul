@@ -119,7 +119,7 @@ const Navbar = () => {
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search..."
-                  className={`absolute -top-[1.2rem] rounded-lg right-8 bg-gray-800  border-b font-light border-gray-600 outline-none px-3 h-10 transition-all duration-500 ease-in-out search-animation`}
+                  className={`absolute -top-[1.2rem] rounded-lg right-8 bg-gray-100  border font-light border-indigo-200 outline-none px-3 h-10 transition-all duration-500 ease-in-out search-animation`}
                   autoFocus
                 />
               )}

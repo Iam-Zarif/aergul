@@ -9,6 +9,7 @@ import { ProfileProvider } from "../ProfileProvider/ProfileProvider";
 import EmailRecap from "../Pages/auth/ForgotPass/EmailRecap/EmailRecap";
 import ForgotPassOtp from "../Pages/auth/ForgotPass/ForgotPassOtp/ForgotPassOtp";
 import ConfirmPass from "../Pages/auth/ForgotPass/ConfirmPass/ConfirmPass";
+import ProfileInfo from "../Pages/ProfileInfo/ProfileInfo";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,9 @@ export const router = createBrowserRouter([
             <Home />
           </ProfileProvider>
         ),
+      },
+      {
+        path:"/profileInfo" , element:<ProfileInfo/>
       },
       {
         path: "/auth",
