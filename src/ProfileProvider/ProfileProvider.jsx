@@ -62,7 +62,15 @@ export const ProfileProvider = ({ children }) => {
     refetchProfile: fetchProfile,
   };
 
-  if (profileLoading) return <div>Loading...</div>;
+  if (profileLoading) return (
+    <div className="h-screen w-full flex items-start justify-center bg-gray-100">
+      <div className="mt-10 flex space-x-2 animate-bounce">
+        <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
+        <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
+        <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
+      </div>
+    </div>
+  );
 
   return (
     <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>

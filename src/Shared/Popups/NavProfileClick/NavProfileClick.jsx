@@ -39,7 +39,7 @@ const NavProfileClick = ({ profile, blankUser }) => {
           />
           <p className="text-sm">{profile?.name}</p>
         </Link>
-        <div className="h-[1px] w-full bg-indigo-200"></div>
+        <div className="h-[1px] w-full bg-indigo-100"></div>
         <div className="flex w-full mt-2  items-center gap-2 px-5 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all">
           <img
             src={settings}
