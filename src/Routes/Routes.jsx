@@ -10,6 +10,7 @@ import EmailRecap from "../Pages/auth/ForgotPass/EmailRecap/EmailRecap";
 import ForgotPassOtp from "../Pages/auth/ForgotPass/ForgotPassOtp/ForgotPassOtp";
 import ConfirmPass from "../Pages/auth/ForgotPass/ConfirmPass/ConfirmPass";
 import ProfileInfo from "../Pages/ProfileInfo/ProfileInfo";
+import ProfileEditPopup from "../Components/ProfileInfo/ProfileEditPopup/ProfileEditPopup";
 
 export const router = createBrowserRouter([
   {
@@ -25,8 +26,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path:"/profileInfo" , element:<ProfileInfo/>
+        path: "/profileInfo",
+        element: <ProfileInfo />,
       },
+      { path: "/profileEdit/edit/basicInfo", element: <ProfileEditPopup /> },
+
       {
         path: "/auth",
         element: <Layout />,

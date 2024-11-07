@@ -10,6 +10,7 @@ export const useProfile = () => useContext(ProfileContext);
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [profileLoading, setProfileLoading] = useState(true);
+
   const [profileError, setProfileError] = useState(null);
 
   const publicRoutes = [
@@ -59,6 +60,7 @@ export const ProfileProvider = ({ children }) => {
     profile,
     profileLoading,
     profileError,
+    setProfile,
     refetchProfile: fetchProfile,
   };
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ProfileOrderHistory from "../ProfileOrderHistory/ProfileOrderHistory";
 import ProfileCart from "../ProfileCart/ProfileCart";
-// import ProfileCart from "../ProfileCart/ProfileCart"; // Uncomment when using
 
 const OrderHistoryAndCart = () => {
   const [activeTab, setActiveTab] = useState("OrderHistory");

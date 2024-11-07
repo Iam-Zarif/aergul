@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import axios from "axios";
 import gif from "../../../../public/auth/login/login.gif";
 import email from "../../../../public/auth/login/mail.png";
@@ -16,7 +16,6 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
 
   const { googleSignIn, facebookSignIn } = useContext(AuthContext);
@@ -85,7 +84,7 @@ const Login = () => {
        ] = `Bearer ${response.data.token}`;
        setSuccessMessage("Redirecting...");
        setTimeout(() => {
-         navigate("/");
+      window.location.href = "/";
        }, 2000);
      } else {
        setErrorMessage(response.data.message || "Login failed");
