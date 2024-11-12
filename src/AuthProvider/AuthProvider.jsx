@@ -65,7 +65,6 @@ const githubSignIn =() =>{
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
-      console.log(loggedUser);
       setsocialUser(loggedUser);
       setLoader(false);
     });
