@@ -47,6 +47,7 @@ const Navbar = () => {
 
   const isAuthPage = [
     "/auth/login",
+    "/contact",
     "/auth/register",
     "/auth/forgot-password",
     "/auth/register/otp",
@@ -132,26 +133,25 @@ const Navbar = () => {
               width={24}
               alt="Cart"
             />
-            <div
-              onClick={handleDropdown}
-              className="relative cursor-pointer w-9 h-9"
-            >
-              <img
-                src={profile?.profilePhoto || blankUser}
-                loading="lazy"
-                className="block border w-full h-full rounded-full object-cover object-top"
-                width={34}
-                alt="Profile"
-              />
-              <div className="absolute -bottom-2 border rounded-full  p-1 z-[99999] -right-1 bg-white">
-                <img src={profileArrow} className=" " width={10} alt="" />
+            <div className="relative cursor-pointer w-9 h-9">
+              <div onClick={handleDropdown}>
+                <img
+                  src={profile?.profilePhoto || blankUser}
+                  loading="lazy"
+                  className="block border w-full h-full rounded-full object-cover object-top"
+                  width={34}
+                  alt="Profile"
+                />
+                <div className="absolute -bottom-2 border rounded-full  p-1 z-[99999] -right-1 bg-white">
+                  <img src={profileArrow} className=" " width={10} alt="" />
+                </div>
               </div>
               {dropDown && (
                 <>
                   <NavProfileClick
                     profile={profile}
                     blankUser={blankUser}
-                    onClose={handleDropdown}
+                    handleDropdown={handleDropdown}
                   />
                 </>
               )}

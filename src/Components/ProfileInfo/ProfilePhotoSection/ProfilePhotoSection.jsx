@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 
 const ProfilePhotoSection = () => {
   const { profile } = useProfile();
+  console.log(profile);
 
-  // Check if address is an object and properly display the components of the address
   const renderAddress = () => {
     if (profile?.address && typeof profile.address === "object") {
       const { city, house, postalCode, street } = profile.address;

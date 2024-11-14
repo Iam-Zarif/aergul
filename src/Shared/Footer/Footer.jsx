@@ -7,6 +7,7 @@ const Footer = () => {
   const isAuthPage = [
     "/auth/login",
     "/auth/register",
+    "/contact",
     "/auth/forgotPass/emailRecap",
     "/auth/register/otp",
     "/auth/forgotPass/verify-otp",

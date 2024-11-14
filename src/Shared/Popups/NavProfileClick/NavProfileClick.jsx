@@ -8,23 +8,42 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { local } from "../../../Api/LocalApi";
 import { Link } from "react-router-dom";
-const NavProfileClick = ({ profile, blankUser }) => {
+import { useState } from "react";
+import FeedbackPopup from "../../../Components/ProfileInfo/FeedbackPopup/FeedbackPopup";
 
-    const handleLogout = async () =>{
-       try{
-         const response  = await axios.post( `${local}/auth/logout`,{})
-         console.log(response);
-         localStorage.removeItem("token");
-         sessionStorage.removeItem("token");
-         Cookies.remove("token");
-         window.location.href="/auth/login"
-       }
-       catch(error){
-         console.log(error)
-       }
+const NavProfileClick = ({ profile, blankUser }) => {
+  const [handleFeedback, setHandleFeedback] = useState(false);
+  const[handleDIsplay, setHandleDIsplay] = useState(false)
+
+  const toogleHandleDisplay = () =>{
+    setHandleDIsplay(!handleDIsplay);
+  }
+
+ const toogleHandleFeedback = () => {
+   setHandleFeedback(!handleFeedback);
+   console.log("Clicked the feedback", handleFeedback);
+ };
+
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${local}/auth/logout`, {});
+      console.log(response);
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      Cookies.remove("token");
+      window.location.href = "/auth/login";
+    } catch (error) {
+      console.log(error);
     }
+  };
   return (
     <div className="bg-white rounded-xl md:h-auto h-screen  w-screen md:w-64 md:absolute right-0 top-14 shadow-sm shadow-indigo-200 z-[9999] pb-3">
+      {handleFeedback && (
+        <>
+          <FeedbackPopup toogleHandleFeedback={toogleHandleFeedback} />
+        </>
+      )}
       <div className="flex w-full flex-col items-start">
         <Link
           to="/profileInfo"
@@ -50,7 +69,7 @@ const NavProfileClick = ({ profile, blankUser }) => {
           />
           <p className="text-sm">Settings & Privacy</p>
         </div>
-        <div className="flex w-full   items-center gap-2 px-5 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all">
+        <div onClick={toogleHandleDisplay} className="flex w-full   items-center gap-2 px-5 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all">
           <img
             src={themes}
             loading="lazy"
@@ -60,7 +79,10 @@ const NavProfileClick = ({ profile, blankUser }) => {
           />
           <p className="text-sm">Display and Accesibility</p>
         </div>
-        <div className="flex w-full   items-center gap-2 px-6 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all">
+        <div
+          onClick={toogleHandleFeedback}
+          className="flex w-full   items-center gap-2 px-6 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all"
+        >
           <img
             src={feedback}
             loading="lazy"
