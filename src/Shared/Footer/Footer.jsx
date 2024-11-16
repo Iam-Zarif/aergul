@@ -13,7 +13,8 @@ const Footer = () => {
     "/auth/forgotPass/verify-otp",
     "/auth/forgotPass/confirmPass",
     "/profileInfo",
-    "/profileEdit/edit/basicInfo"
+    "/profileEdit/edit/basicInfo",
+    "/product"
   ].includes(location.pathname);
 
   if (isAuthPage) return null;

@@ -10,6 +10,7 @@ const ProfileInfo = () => {
         <div className="my-3 bg-gray-200 h-[1px] w-full"></div>
         <OrderHistoryAndCart/>
       </div>
+      <div className="mt-10"></div>
     </div>
   )
 }

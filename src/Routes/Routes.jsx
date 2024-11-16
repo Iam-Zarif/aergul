@@ -12,6 +12,7 @@ import ConfirmPass from "../Pages/auth/ForgotPass/ConfirmPass/ConfirmPass";
 import ProfileInfo from "../Pages/ProfileInfo/ProfileInfo";
 import ProfileEditPopup from "../Components/ProfileInfo/ProfileEditPopup/ProfileEditPopup";
 import Contact from "../Pages/Contact/Contact";
+import ProductDynamicPage from "../ProductDynamicPage/ProductDynamicPage";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
       },
       { path: "/profileEdit/edit/basicInfo", element: <ProfileEditPopup /> },
       {path:"/contact", element:<Contact/>},
+      {path:"/product", element:<ProductDynamicPage/>},
 
       {
         path: "/auth",
