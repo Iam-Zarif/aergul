@@ -6,8 +6,26 @@ import photo4 from "../../../public/newitems/sample.jpg"
 import arrow from "../../../public/newitems/down-arrow.png"
 import "./newArrivals.css"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import { useEffect } from "react"
 
 const NewArrival = () => {
+   useEffect(() => {
+     const fetchNewArrivals = async () => {
+       try {
+         const response = await axios.get(
+           "http://localhost:3000/product/newArrival",{
+            withCredentials: true
+           }
+         );
+         console.log("New Arrival Data:", response.data);
+       } catch (error) {
+         console.error("Error fetching new arrivals:", error);
+       }
+     };
+
+     fetchNewArrivals();
+   }, []);
   return (
     <div className="mt-16 ">
       <div>
