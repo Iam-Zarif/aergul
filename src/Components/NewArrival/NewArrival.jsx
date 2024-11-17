@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useEffect } from "react"
 
+
 const NewArrival = () => {
    useEffect(() => {
      const fetchNewArrivals = async () => {
