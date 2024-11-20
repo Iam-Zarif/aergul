@@ -5,6 +5,7 @@ import ProductPhotoSection from "../Components/ProductDynamic/ProductPhotoSectio
 import SimilarProducts from "../Components/ProductDynamic/SimilarProducts/SimilarProducts";
 import SecondaryFooter from "../Shared/secondaryFooter/secondaryFooter";
 
+
 const ProductDynamicPage = () => {
   const data = useLoaderData(); console.log("Loading Product Dynamic Page", data);
   return (
