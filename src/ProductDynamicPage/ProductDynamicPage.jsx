@@ -1,3 +1,4 @@
+import { useLoaderData } from "react-router-dom";
 import ProductDescription from "../Components/ProductDynamic/ProductDescription/ProductDescription";
 import ProductIntro from "../Components/ProductDynamic/ProductIntro/ProductIntro";
 import ProductPhotoSection from "../Components/ProductDynamic/ProductPhotoSection/ProductPhotoSection";
@@ -5,6 +6,7 @@ import SimilarProducts from "../Components/ProductDynamic/SimilarProducts/Simila
 import SecondaryFooter from "../Shared/secondaryFooter/secondaryFooter";
 
 const ProductDynamicPage = () => {
+  const data = useLoaderData(); console.log("Loading Product Dynamic Page", data);
   return (
     <div>
       <div className="mt-20  max-w-7xl px-4 mx-auto w-full">

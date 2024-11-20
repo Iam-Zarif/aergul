@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
       },
       { path: "/profileEdit/edit/basicInfo", element: <ProfileEditPopup /> },
       {path:"/contact", element:<Contact/>},
-      {path:"/product", element:<ProductDynamicPage/>},
+      {path:"/product/:id", element:<ProductDynamicPage/>, loader:({params})=>fetch(`http://localhost:3000/product/newArrival/${params.id}`)},
 
       {
         path: "/auth",

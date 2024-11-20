@@ -138,7 +138,7 @@ const Navbar = () => {
                 <img
                   src={profile?.profilePhoto || blankUser}
                   loading="lazy"
-                  className="block border w-full h-full rounded-full object-cover object-top"
+                  className="block border w-9 h-9 rounded-full object-cover object-top"
                   width={34}
                   alt="Profile"
                 />
