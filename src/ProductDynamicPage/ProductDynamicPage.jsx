@@ -3,7 +3,7 @@ import ProductDescription from "../Components/ProductDynamic/ProductDescription/
 import ProductIntro from "../Components/ProductDynamic/ProductIntro/ProductIntro";
 import ProductPhotoSection from "../Components/ProductDynamic/ProductPhotoSection/ProductPhotoSection";
 import SimilarProducts from "../Components/ProductDynamic/SimilarProducts/SimilarProducts";
-import SecondaryFooter from "../Shared/secondaryFooter/secondaryFooter";
+import SecondaryFooter from "../Shared/secondaryFooter/SecondaryFooter";
 
 
 const ProductDynamicPage = () => {
