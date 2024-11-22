@@ -4,34 +4,47 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import NewArrivalFetch from "./NewArrivalFetch";
 import NewArrivalFetch2 from "./NewArrivalFetch2";
+import { local } from "../../Api/LocalApi";
 
 const NewArrival = () => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [loading, setLoading] = useState(false);
   const [discountNewArrival, setDiscountNewArrival] = useState([]);
 
-  useEffect(() => {
-    const fetchNewArrivals = async () => {
-      try {
-        setLoading(true); 
-        const response = await axios.get(
-          "http://localhost:3000/product/newArrival",
-          { withCredentials: true }
-        );
-        const allProducts = response.data.data;
-        setNewArrivals(allProducts);
-        setDiscountNewArrival(
-          allProducts.filter((product) => product.discount > 0)
-        );
-        setLoading(false); 
-      } catch (error) {
-        console.error("Error fetching new arrivals:", error);
-        setLoading(false); 
-      }
-    };
+useEffect(() => {
+  const fetchNewArrivals = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${local}/product/newArrival`,
+        { withCredentials: true }
+      );
 
-    fetchNewArrivals();
-  }, []);
+      const allProducts = response.data.data;
+
+      // Sort by `createdAt` in descending order
+      const sortedProducts = [...allProducts].sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA;
+      });
+
+      setNewArrivals(sortedProducts);
+
+      setDiscountNewArrival(
+        sortedProducts.filter((product) => product.discount > 0).slice(0, 2)
+      );
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching new arrivals:", error);
+      setLoading(false);
+    }
+  };
+
+  fetchNewArrivals();
+}, []);
+
 
   return (
     <div className="mt-16">
@@ -58,7 +71,7 @@ const NewArrival = () => {
           <p className="text-center text-gray-500">Loading...</p>
         ) : (
           Array.isArray(discountNewArrival) &&
-          discountNewArrival?.slice(2, 5)?.map((products) => (
+          discountNewArrival?.map((products) => (
             <NewArrivalFetch2 key={products._id} products={products} />
           ))
         )}

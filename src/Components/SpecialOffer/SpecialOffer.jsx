@@ -1,11 +1,43 @@
 
-import photo from "../../../public/newitems/photo.jpg";
-import photo1 from "../../../public/newitems/photo2.jpg";
-import photo2 from "../../../public/newitems/photo3.jpg";
-import photo3 from "../../../public/newitems/photo4.jpg";
-import photo4 from "../../../public/newitems/sample.jpg";
 import arrow from "../../../public/newitems/down-arrow.png";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { local } from "../../Api/LocalApi";
+import SpecialOfferFetch from "./SpecialOfferFetch";
 const SpecialOffer = () => {
+   const [loading, setLoading] = useState(false);
+   const [discountNewArrival, setDiscountNewArrival] = useState([]);
+   console.log("discount", discountNewArrival);
+
+   useEffect(() => {
+     const fetchNewArrivals = async () => {
+       try {
+         setLoading(true);
+         const response = await axios.get(`${local}/product/newArrival`, {
+           withCredentials: true,
+         });
+
+         const allProducts = response.data.data;
+
+         const sortedProducts = [...allProducts].sort((a, b) => {
+           const dateA = new Date(a.createdAt);
+           const dateB = new Date(b.createdAt);
+           return dateB - dateA;
+         });
+
+         setDiscountNewArrival(
+           sortedProducts.filter((product) => product.discount > 0).slice(0, 4)
+         );
+
+         setLoading(false);
+       } catch (error) {
+         console.error("Error fetching new arrivals:", error);
+         setLoading(false);
+       }
+     };
+
+     fetchNewArrivals();
+   }, []);
   return (
     <div className="mt-16">
       <p className="text-center text-2xl font-extrabold text-gray-500">
@@ -14,142 +46,15 @@ const SpecialOffer = () => {
 
       <div>
         <div className="flex mt-8  lg:flex-row flex-col items-center justify-center mx-auto gap-6">
-          <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-yellow-700 text-white">
-              Luxury
-            </div>
-            <figure className="w-full relative">
-              <img
-                className="w-full h-96  cursor-pointer rounded-t-xl object-cover transition-opacity duration-500 ease-in-out hover:opacity-0"
-                src={photo}
-                loading="lazy"
-                alt="item!"
-              />
-              <img
-                className="w-full cursor-pointer rounded-t-xl h-96 object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500 ease-in-out hover:opacity-100"
-                src={photo4}
-                loading="lazy"
-                alt="hover item!"
-              />
-            </figure>
-            <div className="card-body rounded-b-xl arrival-bg">
-              <h2 className="card-title">
-                Pakistani Salwar suit <span className="text-indigo-800"></span>
-              </h2>
-              <div>
-                <p className="text-2xl ">BDT 2,800</p>
-                <p className="text-md text-gray-500 line-through">BDT 3,400</p>
-                <p className="text-gray-500">Quantity : 12</p>
-              </div>
-              <div className="card-actions justify-end">
-                <button className="bg-indigo-950 hover:bg-indigo-800 text-white text-sm py-2 px-4 rounded-lg">
-                  Shop now!
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-green-700 text-white">
-              Regular
-            </div>
-            <figure className="w-full relative">
-              <img
-                className="w-full h-96  cursor-pointer rounded-t-xl object-cover transition-opacity duration-500 ease-in-out hover:opacity-0"
-                src={photo1}
-                loading="lazy"
-                alt="item!"
-              />
-              <img
-                className="w-full cursor-pointer rounded-t-xl h-96 object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500 ease-in-out hover:opacity-100"
-                src={photo4}
-                loading="lazy"
-                alt="hover item!"
-              />
-            </figure>
-            <div className="card-body rounded-b-xl arrival-bg">
-              <h2 className="card-title">
-                Pakistani Salwar suit <span className="text-indigo-800"></span>
-              </h2>
-              <div>
-                <p className="text-2xl ">BDT 2,800</p>
-                <p className="text-md text-gray-500 line-through">BDT 3,400</p>
-                <p className="text-gray-500">Quantity : 12</p>
-              </div>
-              <div className="card-actions justify-end">
-                <button className="bg-indigo-950 hover:bg-indigo-800 text-white text-sm py-2 px-4 rounded-lg">
-                  Shop now!
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-gray-200 text-black">
-              Elegent
-            </div>
-            <figure className="w-full relative">
-              <img
-                className="w-full h-96  cursor-pointer rounded-t-xl object-cover transition-opacity duration-500 ease-in-out hover:opacity-0"
-                src={photo3}
-                loading="lazy"
-                alt="item!"
-              />
-              <img
-                className="w-full cursor-pointer rounded-t-xl h-96 object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500 ease-in-out hover:opacity-100"
-                src={photo4}
-                loading="lazy"
-                alt="hover item!"
-              />
-            </figure>
-            <div className="card-body rounded-b-xl arrival-bg">
-              <h2 className="card-title">
-                Pakistani Salwar suit <span className="text-indigo-800"></span>
-              </h2>
-              <div>
-                <p className="text-2xl ">BDT 2,800</p>
-                <p className="text-md text-gray-500 line-through">BDT 3,400</p>
-                <p className="text-gray-500">Quantity : 12</p>
-              </div>
-              <div className="card-actions justify-end">
-                <button className="bg-indigo-950 hover:bg-indigo-800 text-white text-sm py-2 px-4 rounded-lg">
-                  Shop now!
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="card relative glass w-80">
-            <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs animate-pulse font-bold rounded-full bg-gray-700 text-white">
-              Casual
-            </div>
-            <figure className="w-full relative">
-              <img
-                className="w-full h-96  cursor-pointer rounded-t-xl object-cover transition-opacity duration-500 ease-in-out hover:opacity-0"
-                src={photo2}
-                loading="lazy"
-                alt="item!"
-              />
-              <img
-                className="w-full cursor-pointer rounded-t-xl h-96 object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500 ease-in-out hover:opacity-100"
-                src={photo4}
-                loading="lazy"
-                alt="hover item!"
-              />
-            </figure>
-            <div className="card-body rounded-b-xl arrival-bg">
-              <h2 className="card-title">
-                Pakistani Salwar suit <span className="text-indigo-800"></span>
-              </h2>
-              <div>
-                <p className="text-2xl ">BDT 2,800</p>
-                <p className="text-md text-gray-500 line-through">BDT 3,400</p>
-                <p className="text-gray-500">Quantity : 12</p>
-              </div>
-              <div className="card-actions justify-end">
-                <button className="bg-indigo-950 hover:bg-indigo-800 text-white text-sm py-2 px-4 rounded-lg">
-                  Shop now!
-                </button>
-              </div>
-            </div>
-          </div>
+          {loading ? (
+            <p>Loading..</p>
+          ) : (
+            <>
+              {discountNewArrival?.map((product) => (
+                <SpecialOfferFetch key={product._id} product={product} />
+              ))}
+            </>
+          )}
         </div>
       </div>
       <button className="flex items-center justify-center mx-auto mt-10 bg-gray-200 px-6 py-2.5 text-indigo-950 rounded-lg gap-2">

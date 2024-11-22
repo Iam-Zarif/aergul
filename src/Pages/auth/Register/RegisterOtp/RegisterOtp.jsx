@@ -3,6 +3,7 @@ import axios from "axios";
 import back from "../../../../../public/common/back.png";
 import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import { local } from "../../../../Api/LocalApi";
 
 const RegisterOtp = () => {
   const inputs = useRef([]);
@@ -72,7 +73,7 @@ const RegisterOtp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/register-verify-otp",
+        `${local}/auth/register-verify-otp`,
         {
           email: email,
           otp: enteredOtp,

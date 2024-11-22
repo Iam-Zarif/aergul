@@ -7,7 +7,7 @@ import SecondaryFooter from "../Shared/secondaryFooter/SecondaryFooter";
 
 
 const ProductDynamicPage = () => {
-  const data = useLoaderData(); console.log("Loading Product Dynamic Page", data);
+  const data = useLoaderData(); 
   return (
     <div>
       <div className="mt-20  max-w-7xl px-4 mx-auto w-full">
@@ -15,25 +15,23 @@ const ProductDynamicPage = () => {
           <div className="col-span-3 ">
             <div className="flex text-sm items-center gap-2">
               <p>Home</p> -<p>Product</p>- <p>New arrival</p> -
-              <p className="font-semibold text-gray-500">
-                Pakistani Salwar suit
-              </p>
+              <p className="font-semibold text-gray-500">{data?.data?.name}</p>
             </div>
 
-            <ProductPhotoSection />
+            <ProductPhotoSection data={data?.data} />
           </div>
           <div className="col-span-2">
-            <ProductIntro/>
+            <ProductIntro data={data?.data} />
           </div>
         </div>
         <div>
-          <ProductDescription/>
-          <SimilarProducts/>
+          <ProductDescription data={data?.data} />
+          <SimilarProducts data={data?.data?.similarProducts} />
         </div>
       </div>
-        <div className="mt-10">
-          <SecondaryFooter/>
-        </div>
+      <div className="mt-10">
+        <SecondaryFooter data={data?.data} />
+      </div>
     </div>
   );
 };

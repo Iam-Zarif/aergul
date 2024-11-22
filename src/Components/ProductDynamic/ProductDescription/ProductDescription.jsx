@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import ProductQa from "./ProductQa/ProductQa";
 import ProductReviews from "./ProductReviews/ProductReviews";
 
-const ProductDescription = () => {
+const ProductDescription = ({data}) => {
   const [activeTab, setActiveTab] = useState("Description");
 
   return (
@@ -44,13 +45,13 @@ const ProductDescription = () => {
 
       <div className="mt-4 border rounded-lg bg-gray-50 p-6 shadow-lg">
         {activeTab === "Description" && (
-          <ProductDetails/>
+          <ProductDetails data={data}/>
         )}
         {activeTab === "QA" && (
-         <ProductQa/>
+         <ProductQa data={data?.qa}/>
         )}
         {activeTab === "Reviews" && (
-         <ProductReviews/>
+         <ProductReviews data={data?.reviews}/>
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@ import cross from "../../../../public/profile/cross.png";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { useProfile } from "../../../ProfileProvider/ProfileProvider";
+import { local } from "../../../Api/LocalApi";
 
 const FeedbackPopup = ({ toogleHandleFeedback }) => {
   const { profile } = useProfile();
@@ -30,7 +31,7 @@ const FeedbackPopup = ({ toogleHandleFeedback }) => {
     setSuccess(false);
 
     try {
-      const response = await axios.post("http://localhost:3000/user/feedback", {
+      const response = await axios.post(`${local}/user/feedback`, {
         name,
         email,
         phone,

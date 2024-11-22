@@ -7,7 +7,33 @@ import photo2 from "../../../public/newitems/photo3.jpg";
 import photo3 from "../../../public/newitems/photo4.jpg";
 import photo4 from "../../../public/newitems/sample.jpg";
 import arrow from "../../../public/newitems/down-arrow.png";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { local } from "../../Api/LocalApi";
 const TopRated = () => {
+
+
+   const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    const fetchNewArrivals = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${local}/product/newArrival`, {
+          withCredentials: true,
+        });
+console.log(response)
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching new arrivals:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchNewArrivals();
+  }, []);
   return (
     <div className="mt-16">
       <p className="text-center text-2xl font-extrabold text-gray-500">

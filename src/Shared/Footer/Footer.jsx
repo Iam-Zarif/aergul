@@ -4,7 +4,8 @@ import "./footer.css";
 const Footer = () => {
   const location = useLocation(); 
 
-  const isAuthPage = [
+const isAuthPage =
+  [
     "/auth/login",
     "/auth/register",
     "/contact",
@@ -14,8 +15,8 @@ const Footer = () => {
     "/auth/forgotPass/confirmPass",
     "/profileInfo",
     "/profileEdit/edit/basicInfo",
-    "/product"
-  ].includes(location.pathname);
+  ].includes(location.pathname) || location.pathname.startsWith("/product/");
+
 
   if (isAuthPage) return null;
 
