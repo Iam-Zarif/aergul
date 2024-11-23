@@ -13,6 +13,7 @@ import ProfileInfo from "../Pages/ProfileInfo/ProfileInfo";
 import ProfileEditPopup from "../Components/ProfileInfo/ProfileEditPopup/ProfileEditPopup";
 import Contact from "../Pages/Contact/Contact";
 import ProductDynamicPage from "../ProductDynamicPage/ProductDynamicPage";
+import AllProducts from "../Pages/AllProducts/AllProducts";
 
 export const router = createBrowserRouter([
   {
@@ -31,9 +32,15 @@ export const router = createBrowserRouter([
         path: "/profileInfo",
         element: <ProfileInfo />,
       },
+      { path: "/collections", element:<AllProducts/> },
       { path: "/profileEdit/edit/basicInfo", element: <ProfileEditPopup /> },
-      {path:"/contact", element:<Contact/>},
-      {path:"/product/:id", element:<ProductDynamicPage/>, loader:({params})=>fetch(`http://localhost:3000/product/newArrival/${params.id}`)},
+      { path: "/contact", element: <Contact /> },
+      {
+        path: "/product/:id",
+        element: <ProductDynamicPage />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/product/newArrival/${params.id}`),
+      },
 
       {
         path: "/auth",
