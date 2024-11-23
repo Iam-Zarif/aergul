@@ -7,7 +7,6 @@ import SpecialOfferFetch from "./SpecialOfferFetch";
 const SpecialOffer = () => {
    const [loading, setLoading] = useState(false);
    const [discountNewArrival, setDiscountNewArrival] = useState([]);
-   console.log("discount", discountNewArrival);
 
    useEffect(() => {
      const fetchNewArrivals = async () => {
@@ -38,6 +37,7 @@ const SpecialOffer = () => {
 
      fetchNewArrivals();
    }, []);
+   
   return (
     <div className="mt-16">
       <p className="text-center text-2xl font-extrabold text-gray-500">
