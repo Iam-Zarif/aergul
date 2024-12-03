@@ -77,6 +77,8 @@ const RegisterOtp = () => {
         {
           email: email,
           otp: enteredOtp,
+        }, {
+          withCredentials: true,
         }
       );
 

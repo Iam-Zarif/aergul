@@ -133,7 +133,9 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post(`${local}/auth/register`, userData);
+      const response = await axios.post(`${local}/auth/register`, userData, {
+        withCredentials: true,
+      });
       console.log(response);
       if (response.status === 201) {
        
