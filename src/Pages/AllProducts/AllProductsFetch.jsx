@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
-
 import { Link } from "react-router-dom";
 
-
 const ItemCard = ({ product }) => {
-    console.log(product);
+  console.log(product);
   if (!product || Object.keys(product).length === 0) {
     return (
       <div className="p-4 text-center text-red-500">
@@ -13,13 +11,25 @@ const ItemCard = ({ product }) => {
     );
   }
 
-  const {_id, name, price, offerPrice, discount, type, thumb, sizes } = product;
+  const { _id, name, price, offerPrice, discount,reviews, type, thumb, sizes } =
+    product;
+
+    const averageRating =
+      reviews && reviews?.length > 0
+        ? (
+            reviews?.reduce((sum, review) => sum + review.rating, 0) /
+            reviews?.length
+          )?.toFixed(1)
+        : null;
 
   return (
-    <Link to={`/product/${_id}`} className="max-w-sm relative mx-auto border rounded-lg w-full shadow-lg overflow-hidden bg-white">
+    <Link
+      to={`/product/${_id}`}
+      className="max-w-sm relative mx-auto border rounded-xl w-full shadow-lg overflow-hidden bg-white flex flex-col"
+    >
       <div className="relative">
         <img
-          src={thumb || "https://via.placeholder.com/300"} 
+          src={thumb || "https://via.placeholder.com/300"}
           alt={name}
           className="w-full h-64 object-cover"
         />
@@ -28,8 +38,8 @@ const ItemCard = ({ product }) => {
         </div>
       </div>
 
-      <div className="p-4">
-        <h2 className="text-lg font-bold text-gray-800">
+      <div className="p-4 flex-grow">
+        <h2 className=" font-bold text-gray-800">
           {name || "No Name Available"}
         </h2>
 
@@ -51,7 +61,7 @@ const ItemCard = ({ product }) => {
           )}
         </div>
 
-        <div className="mt-4 flex items-center">
+        <div className="mt-2 flex items-center">
           <span className="text-xl font-semibold text-green-600">
             ${offerPrice || price || "N/A"}
           </span>
@@ -61,9 +71,31 @@ const ItemCard = ({ product }) => {
             </span>
           )}
         </div>
+        <div className="text-sm font-light ">
+          <p>
+            Reviews :
+            <span className=" text-gray-500">
+              {averageRating ? (
+                <>
+                  <span className="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+                    {averageRating}
+                  </span>
+                  /5
+                </>
+              ) : (
+                "No ratings yet"
+              )}
+            </span>{" "}
+          </p>
+        </div>
+      </div>
 
-        <button className="mt-4 w-full  bg-indigo-900 hover:bg-indigo-950 text-white py-2 rounded">
+      <div className="mt-auto px-4 pb-4">
+        <button className="w-full text-sm bg-indigo-900 hover:bg-indigo-950 text-white py-2 rounded-xl">
           Buy Now
+        </button>
+        <button className="mt-2 w-full text-sm bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-semibold py-2 rounded-xl shadow-md transition-all duration-300">
+          Add to Cart
         </button>
       </div>
     </Link>

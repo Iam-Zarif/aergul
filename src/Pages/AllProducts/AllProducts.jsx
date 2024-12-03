@@ -37,8 +37,10 @@ const AllProducts = () => {
     if (sort === "price High To Low") return b.offerPrice - a.offerPrice;
     if (sort === "Top Rated")
       return b.reviews[0]?.rating - a.reviews[0]?.rating || 0;
-    return 0; // Default sorting
+    return 0; 
   });
+
+  console.log("All products - ",allProducts)
 
   return (
     <div className="mt-24 mb-28">

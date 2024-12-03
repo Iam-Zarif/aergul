@@ -1,1 +1,1 @@
-export const local = "http://localhost:3000";
+export const local = "https://aergul-server.vercel.app";
