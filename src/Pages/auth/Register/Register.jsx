@@ -52,7 +52,6 @@ const Register = () => {
         password: "", // Password is not required for Google sign-in
       };
 
-      // Call your register API with the user data
       const response = await axios.post(
         `${local}/auth/google/register`,
         userData
@@ -64,7 +63,6 @@ const Register = () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.token}`;
-      // Handle the response
       if (response.status === 201) {
         setSuccessMessage("Account created successfully!");
         setTimeout(() => {
@@ -75,7 +73,6 @@ const Register = () => {
         setErrorMessage("Too many requests. Please try again later.");
       }
     } catch (error) {
-      // Handle the error response
       if (error.response) {
         if (error.response.status === 429) {
           setErrorMessage("Too many requests. Please try again later.");

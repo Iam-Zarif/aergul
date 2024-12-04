@@ -5,6 +5,7 @@ import axios from "axios";
 import blankUser from "../../../../public/navbar/blackUser.png";
 import { Link } from "react-router-dom";
 import edit from "../../../../public/profile/edit.png";
+import { local } from "../../../Api/LocalApi";
 
 const ProfileEditPopup = () => {
   const { profile, setProfile } = useProfile();
@@ -88,7 +89,7 @@ const ProfileEditPopup = () => {
         profilePhoto: uploadedImageUrl,
       };
       const response = await axios.put(
-        "http://localhost:3000/user/profileEdit",
+        `${local}/user/profileEdit`,
         updatedProfileData,
         {
           withCredentials: true,

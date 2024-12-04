@@ -1,1 +1,0 @@
-export  const api = "https://aergul-server.vercel.app"; 

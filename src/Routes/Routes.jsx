@@ -14,6 +14,7 @@ import ProfileEditPopup from "../Components/ProfileInfo/ProfileEditPopup/Profile
 import Contact from "../Pages/Contact/Contact";
 import ProductDynamicPage from "../ProductDynamicPage/ProductDynamicPage";
 import AllProducts from "../Pages/AllProducts/AllProducts";
+import { local } from "../Api/LocalApi";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
         path: "/product/:id",
         element: <ProductDynamicPage />,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/product/newArrival/${params.id}`),
+          fetch(`${local}/product/newArrival/${params.id}`),
       },
 
       {
