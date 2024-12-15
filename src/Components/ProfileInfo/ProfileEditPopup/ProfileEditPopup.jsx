@@ -79,6 +79,7 @@ const ProfileEditPopup = () => {
   };
 
   const handleUpdateProfile = async (uploadedImageUrl) => {
+    const token = localStorage.getItem("token");
     try {
       setUpdateMessage("Updating...");
       setIsLoading(true);
@@ -95,6 +96,7 @@ const ProfileEditPopup = () => {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

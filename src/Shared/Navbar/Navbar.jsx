@@ -8,13 +8,15 @@ import cart from "../../../public/navbar/cart.png";
 import "./navbar.css";
 import { useProfile } from "../../ProfileProvider/ProfileProvider";
 import NavProfileClick from "../Popups/NavProfileClick/NavProfileClick";
+import axios from "axios";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
+  const [cartCount, setcartCount] = useState(0);
   const [dropDown, setDropDown] = useState(false);
-  const location = useLocation(); 
   const { profile } = useProfile();
+  console.log(profile);
 
   const handleDropdown = () => {
     setDropDown(!dropDown);
@@ -44,7 +46,7 @@ const Navbar = () => {
     };
   }, [showSearch]);
 
-
+  const location = useLocation(); 
   const isAuthPage = [
     "/auth/login",
     "/contact",
@@ -55,9 +57,38 @@ const Navbar = () => {
     "/auth/forgotPass/verify-otp",
     "/auth/forgotPass/confirmPass",
   ].includes(location.pathname);
-
-  // Don't render the Navbar if on the login page
   if (isAuthPage) return null;
+
+  useEffect(() => {
+    const fetchProfileCart = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Retrieve token from localStorage
+        if (!token) {
+          console.error("Token not found in localStorage.");
+          return;
+        }
+
+        const response = await axios.get(
+          "http://www.localhost:3000/cart/profile-cart",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Pass token in the Authorization header
+            },
+          }
+        );
+
+        console.log("Profile cart data:", response.data); // Log the response data
+        setcartCount(response.data.cart.length);
+      } catch (error) {
+        console.error(
+          "Error fetching profile cart:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    fetchProfileCart();
+  }, []);
 
   return (
     <div className="w-full fixed top-0 z-[99999] shadow-sm bg-white shadow-gray-300">
@@ -126,13 +157,23 @@ const Navbar = () => {
               )}
             </div>
 
-            <img
-              src={cart}
-              loading="lazy"
-              className="block cursor-pointer"
-              width={24}
-              alt="Cart"
-            />
+            <div className="relative">
+              <img
+                src={cart}
+                loading="lazy"
+                className="block cursor-pointer"
+                width={24}
+                alt="Cart"
+              />
+              {cartCount > 0 && (
+                <>
+                  {" "}
+                  <p className="absolute -top-2 -right-2 text-sm bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </p>
+                </>
+              )}
+            </div>
             <div className="relative cursor-pointer w-9 h-9">
               <div onClick={handleDropdown}>
                 <img

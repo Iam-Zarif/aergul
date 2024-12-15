@@ -9,11 +9,20 @@ const TopRated = () => {
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
+      const token = localStorage.getItem("token");
       try {
         setLoading(true);
-        const response = await axios.get(`${local}/product/newArrival`, {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `${local}/product/newArrival`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Pass token in header
+            },
+          },
+          {
+            withCredentials: true,
+          }
+        );
 
         const allProducts = response.data.data;
 

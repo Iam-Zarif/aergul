@@ -54,7 +54,10 @@ const Register = () => {
 
       const response = await axios.post(
         `${local}/auth/google/register`,
-        userData
+        userData,
+        {
+          withCredentials: true,
+        }
       );
       console.log(response)
       localStorage.setItem("token", response.data.token);

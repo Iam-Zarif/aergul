@@ -13,10 +13,16 @@ const NewArrival = () => {
 
 useEffect(() => {
   const fetchNewArrivals = async () => {
+    const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const response = await axios.get(
         `${local}/product/newArrival`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token in header
+          },
+        },
         { withCredentials: true }
       );
 

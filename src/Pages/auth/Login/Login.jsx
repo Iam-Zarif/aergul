@@ -38,7 +38,7 @@ const Login = () => {
         password: "",
       };
       const response = await axios.post(`${local}/auth/google/login`, userData);
-      if (response.status === 200) {
+      if (response.status === 201) {
         localStorage.setItem("token", response.data.token);
         sessionStorage.setItem("token", response.data.token);
         Cookies.set("token", response.data.token);
@@ -71,7 +71,10 @@ const Login = () => {
        email: emailValue,
        password: passwordValue,
        rememberMe: rememberMe, // Include rememberMe here
+     }, {
+       withCredentials: true,
      });
+  
      console.log(response)
      if (response.status === 201) {
        localStorage.setItem("token", response.data.token);

@@ -4,7 +4,6 @@
 import photo4 from "../../../public/newitems/sample.jpg";
 
 const TopRatedFetch = ({product}) => {
-    console.log("Top rated product - ",product);
 
     const averageRating =
       product?.reviews?.length > 0
@@ -14,7 +13,6 @@ const TopRatedFetch = ({product}) => {
           ).toFixed(1) 
         : "N/A";
 
-  console.log(averageRating);
   return (
     <div className="card relative glass w-80">
       <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs  font-bold rounded-full bg-green-700 shadow-md shadow-gray-500 text-white">

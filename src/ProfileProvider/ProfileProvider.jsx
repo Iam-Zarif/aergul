@@ -10,7 +10,6 @@ export const useProfile = () => useContext(ProfileContext);
 export const ProfileProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [profileLoading, setProfileLoading] = useState(true);
-
   const [profileError, setProfileError] = useState(null);
 
   const publicRoutes = [
@@ -27,9 +26,18 @@ export const ProfileProvider = ({ children }) => {
     setProfileError(null);
 
     try {
-      const response = await axios.get(`${local}/user/profile`, {
-        withCredentials: true,
-      });
+      const token = localStorage.getItem("token"); console.log("token",token) 
+      const response = await axios.get(
+        `http://www.localhost:3000/user/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token in header
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      );
       const user = response?.data?.user;
       setProfile(user);
       const currentPathname = window.location.pathname;

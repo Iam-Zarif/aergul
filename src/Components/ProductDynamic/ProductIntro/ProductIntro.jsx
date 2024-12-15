@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
+import axios from "axios";
 import { Rating } from "@smastrom/react-rating";
 
 const ProductIntro = ({ data }) => {
@@ -13,15 +15,64 @@ const ProductIntro = ({ data }) => {
     sizes = ["Free Size"], // Default to 'Free Size' if no sizes are provided
     keyFeatures = [],
     reviews = [], // Default to an empty array if no reviews
-  } = data || {}; // Handle case where data is undefined
+  } = data || {}; 
 
-  // Calculate the average rating
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
       : 0; // Default to 0 if no reviews
 
   const specialPrice = discount > 0 ? offerPrice : price;
+
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(
+        "http://www.localhost:3000/cart/add-to-cart",
+        {
+          productId: _id,
+          quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token in header
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log("Response:", response);
+      if (response.status === 200) {
+        setMessage(
+          response.data.message || "Product added to cart successfully!"
+        );
+        setMessageType("success");
+      } else {
+        setMessage(response.data.message || "Failed to add product to cart.");
+        setMessageType("error");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      if (error.response) {
+        setMessage(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else {
+        setMessage("Network error. Please check your connection.");
+      }
+      setMessageType("error");
+    }
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  };
+
 
   return (
     <div className="mt-8">
@@ -39,7 +90,6 @@ const ProductIntro = ({ data }) => {
           <p>{reviews.length} Reviews</p> {/* Display number of reviews */}
         </div>
 
-        {/* Product ID */}
         <p className="text-gray-500">Product ID: #{_id || "N/A"}</p>
 
         {/* Price Information */}
@@ -56,9 +106,11 @@ const ProductIntro = ({ data }) => {
           </div>
         )}
 
-        {/* Action Buttons */}
         <div className="flex text-sm items-center gap-4 mt-4">
-          <button className="bg-indigo-800 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-blue-400">
+          <button
+            onClick={handleAddToCart}
+            className="bg-indigo-800 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-blue-400"
+          >
             Add to Cart
           </button>
           <button className="bg-green-700 text-white px-6 py-2 rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-400">
@@ -66,7 +118,19 @@ const ProductIntro = ({ data }) => {
           </button>
         </div>
 
-        {/* Sizes */}
+        {/* Message Display */}
+        {message && (
+          <div className="fixed inset-0 flex items-center  justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[999999]">
+            <div
+              className={`px-6 py-3 rounded-lg text-white text-sm ${
+                messageType === "success" ? "bg-green-500" : "bg-red-500"
+              }`}
+            >
+              {message}
+            </div>
+          </div>
+        )}
+
         {sizes.length > 0 && (
           <div className="flex mt-3 flex-col items-start gap-1">
             <p className="font-semibold">Sizes</p>
@@ -78,7 +142,6 @@ const ProductIntro = ({ data }) => {
           </div>
         )}
 
-        {/* Quick Overview */}
         {keyFeatures.length > 0 && (
           <div className="mt-3">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
