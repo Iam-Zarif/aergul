@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom"; 
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
 import blankUser from "../../../public/navbar/blackUser.png";
@@ -9,14 +9,16 @@ import "./navbar.css";
 import { useProfile } from "../../ProfileProvider/ProfileProvider";
 import NavProfileClick from "../Popups/NavProfileClick/NavProfileClick";
 import axios from "axios";
+import { local } from "../../Api/LocalApi";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
   const [cartCount, setcartCount] = useState(0);
   const [dropDown, setDropDown] = useState(false);
+  const navigate = useNavigate();
   const { profile } = useProfile();
-  console.log(profile);
+  const location = useLocation();
 
   const handleDropdown = () => {
     setDropDown(!dropDown);
@@ -46,7 +48,6 @@ const Navbar = () => {
     };
   }, [showSearch]);
 
-  const location = useLocation(); 
   const isAuthPage = [
     "/auth/login",
     "/contact",
@@ -69,15 +70,14 @@ const Navbar = () => {
         }
 
         const response = await axios.get(
-          "http://www.localhost:3000/cart/profile-cart",
+          `${local}/cart/profile-cart`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Pass token in the Authorization header
+              Authorization: `Bearer ${token}`,
             },
           }
         );
 
-        console.log("Profile cart data:", response.data); // Log the response data
         setcartCount(response.data.cart.length);
       } catch (error) {
         console.error(
@@ -89,6 +89,13 @@ const Navbar = () => {
 
     fetchProfileCart();
   }, []);
+
+  // Helper function to check if the link is active
+  const getLinkClassName = (path) => {
+    return location.pathname === path
+      ? "flex bg-gray-100 py-5 w-full cursor-pointer flex-col px-10 gap-1 items-center font-extrabold text-indigo-600"
+      : "flex py-5 w-full flex-col px-10 cursor-pointer gap-1 items-center font-light";
+  };
 
   return (
     <div className="w-full fixed top-0 z-[99999] shadow-sm bg-white shadow-gray-300">
@@ -108,29 +115,20 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex text-[14px] items-center ">
-            <Link
-              to="/"
-              className="flex bg-gray-100 py-5 w-full flex-col px-10 gap-1 items-center"
-            >
-              <p className="font-extrabold">Home</p>
+            <Link to="/" className={getLinkClassName("/")}>
+              <p className="">Home</p>
             </Link>
             <Link
               to="/collections"
-              className="flex py-5 w-full flex-col px-10 gap-1 items-center"
+              className={getLinkClassName("/collections")}
             >
-              <p className="font-light">Collections</p>
+              <p className="">Collections</p>
             </Link>
-            <Link
-              to="/about"
-              className="flex gap-1 flex-nowrap py-5 flex-col px-10 flex-1 w-full items-center"
-            >
-              <p className="w-full text-nowrap font-light">About us</p>
+            <Link to="/about" className={getLinkClassName("/about")}>
+              <p className="w-full text-nowrap ">About us</p>
             </Link>
-            <Link
-              to="/contact"
-              className="flex gap-1 flex-nowrap py-5 flex-col px-10 flex-1 w-full items-center"
-            >
-              <p className="w-full text-nowrap font-light">Contact us</p>
+            <Link to="/contact" className={getLinkClassName("/contact")}>
+              <p className="w-full text-nowrap ">Contact us</p>
             </Link>
           </div>
 
@@ -160,18 +158,16 @@ const Navbar = () => {
             <div className="relative">
               <img
                 src={cart}
+                onClick={() => navigate("/myCart")}
                 loading="lazy"
                 className="block cursor-pointer"
                 width={24}
                 alt="Cart"
               />
               {cartCount > 0 && (
-                <>
-                  {" "}
-                  <p className="absolute -top-2 -right-2 text-sm bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartCount}
-                  </p>
-                </>
+                <p className="absolute -top-2 -right-2 text-sm text-white rounded-full w-5 h-5 flex items-center justify-center bg-gradient-to-r from-indigo-800 via-gray-800 to-indigo-800 animate-gradient">
+                  {cartCount}
+                </p>
               )}
             </div>
             <div className="relative cursor-pointer w-9 h-9">

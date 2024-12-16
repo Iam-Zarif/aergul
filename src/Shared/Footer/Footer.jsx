@@ -11,6 +11,7 @@ const isAuthPage =
     "/contact",
     "/auth/forgotPass/emailRecap",
     "/auth/register/otp",
+    "/myCart",
     "/auth/forgotPass/verify-otp",
     "/auth/forgotPass/confirmPass",
     "/profileInfo",

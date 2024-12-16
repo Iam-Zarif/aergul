@@ -1,5 +1,12 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import axios from "axios";
 import { local } from "../Api/LocalApi";
 
@@ -12,77 +19,89 @@ export const ProfileProvider = ({ children }) => {
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileError, setProfileError] = useState(null);
 
-  const publicRoutes = [
-    "/auth/login",
-    "/auth/register",
-    "/auth/register-otp",
-    "/auth/reset-password-email",
-    "/auth/reset-password-otp",
-    "/auth/reset-password-setPassword",
-  ];
+  const publicRoutes = useMemo(
+    () => [
+      "/auth/login",
+      "/auth/register",
+      "/auth/register-otp",
+      "/auth/reset-password-email",
+      "/auth/reset-password-otp",
+      "/auth/reset-password-setPassword",
+    ],
+    []
+  );
 
-  const fetchProfile = async () => {
-    setProfileLoading(true);
-    setProfileError(null);
+const fetchProfile = useCallback(async () => {
+  setProfileLoading(true);
+  setProfileError(null);
 
-    try {
-      const token = localStorage.getItem("token"); console.log("token",token) 
-      const response = await axios.get(
-        `http://www.localhost:3000/user/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Pass token in header
-          },
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      const user = response?.data?.user;
-      setProfile(user);
-      const currentPathname = window.location.pathname;
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${local}/user/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
 
-      if (user && publicRoutes.includes(currentPathname)) {
-        window.location.href = "/";
-      } else if (!user && !publicRoutes.includes(currentPathname)) {
-        window.location.href = "/auth/login";
-      }
-    } catch (err) {
-      setProfileError(err.response?.data?.message || "Failed to fetch profile");
-      console.error("Error fetching profile:", err);
+    const user = response?.data?.user;
+    setProfile(user);
 
-      const currentPathname = window.location.pathname;
-      if (!publicRoutes.includes(currentPathname)) {
-        window.location.href = "/auth/login";
-      }
-    } finally {
-      setProfileLoading(false);
+    const currentPathname = window.location.pathname;
+    if (user && publicRoutes.includes(currentPathname)) {
+      window.location.href = "/";
+    } else if (!user && !publicRoutes.includes(currentPathname)) {
+      window.location.href = "/auth/login";
     }
-  };
+  } catch (err) {
+    setProfileError(err.response?.data?.message || "Failed to fetch profile");
+    const currentPathname = window.location.pathname;
+    if (!publicRoutes.includes(currentPathname)) {
+      window.location.href = "/auth/login";
+    }
+  } finally {
+    setProfileLoading(false);
+  }
+}, [publicRoutes]);
+
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [fetchProfile]);
 
-  const value = {
-    profile,
-    profileLoading,
-    profileError,
-    setProfile,
-    refetchProfile: fetchProfile,
-  };
-
-  if (profileLoading) return (
-    <div className="h-screen w-full flex items-start justify-center bg-gray-100">
-      <div className="mt-10 flex space-x-2 animate-bounce">
-        <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
-        <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
-        <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
-      </div>
-    </div>
+  const value = useMemo(
+    () => ({
+      profile,
+      profileLoading,
+      profileError,
+      setProfile,
+      refetchProfile: fetchProfile,
+    }),
+    [profile, profileLoading, profileError, fetchProfile]
   );
+
+  if (profileLoading) {
+    return (
+      <div className="h-screen w-full flex items-start justify-center bg-gray-100">
+        <div className="mt-10 flex space-x-2 animate-bounce">
+          <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
+          <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
+          <div className="w-4 h-4 bg-indigo-500 rounded-full"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
   );
 };
+
+// Add display name to avoid ESLint warning
+const ProfileInfoComponent = React.memo(({ profile }) => {
+  return <div>{profile?.name}</div>;
+});
+
+ProfileInfoComponent.displayName = "ProfileInfo"; // Adding display name
+
+export const ProfileInfo = ProfileInfoComponent;

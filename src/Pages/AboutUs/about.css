@@ -1,0 +1,30 @@
+/* about.css */
+
+/* Gallery Hover Effect */
+.group:hover img {
+  transform: scale(1.05);
+}
+
+.group:hover .bg-black {
+  opacity: 0.4;
+}
+
+/* Card Hover Effect */
+.group:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+.search-animation {
+  animation: searchExpand 0.5s ease-out forwards;
+}
+
+@keyframes searchExpand {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 250px;
+  }
+}

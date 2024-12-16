@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 
+import { Link } from "react-router-dom";
 import photo4 from "../../../public/newitems/sample.jpg";
 
 const TopRatedFetch = ({product}) => {
@@ -14,7 +15,7 @@ const TopRatedFetch = ({product}) => {
         : "N/A";
 
   return (
-    <div className="card relative glass w-80">
+    <Link to={`/product/${product?._id}`} className="card relative glass w-80">
       <div className="absolute -top-3 -right-3 h-10 w-14 z-[9999] flex items-center justify-center text-xs  font-bold rounded-full bg-green-700 shadow-md shadow-gray-500 text-white">
         {averageRating}/5
       </div>
@@ -47,7 +48,7 @@ const TopRatedFetch = ({product}) => {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

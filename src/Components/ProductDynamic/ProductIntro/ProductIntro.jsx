@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Rating } from "@smastrom/react-rating";
+import { local } from "../../../Api/LocalApi";
 
 const ProductIntro = ({ data }) => {
   const {
@@ -12,9 +13,9 @@ const ProductIntro = ({ data }) => {
     discount = 0,
     type,
     color,
-    sizes = ["Free Size"], // Default to 'Free Size' if no sizes are provided
+    sizes = ["Free Size"],
     keyFeatures = [],
-    reviews = [], // Default to an empty array if no reviews
+    reviews = [],
   } = data || {}; 
 
   const [message, setMessage] = useState("");
@@ -23,7 +24,7 @@ const ProductIntro = ({ data }) => {
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
-      : 0; // Default to 0 if no reviews
+      : 0; 
 
   const specialPrice = discount > 0 ? offerPrice : price;
 
@@ -31,14 +32,14 @@ const ProductIntro = ({ data }) => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
-        "http://www.localhost:3000/cart/add-to-cart",
+        `${local}/cart/add-to-cart`,
         {
           productId: _id,
           quantity: 1,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Pass token in header
+            Authorization: `Bearer ${token}`, 
           },
         },
         {
@@ -52,6 +53,12 @@ const ProductIntro = ({ data }) => {
           response.data.message || "Product added to cart successfully!"
         );
         setMessageType("success");
+      }
+      else if(response.status === 400){
+        setMessage(
+          response.data.message || "Product already added to cart!"
+        );
+        setMessageType("warning");
       } else {
         setMessage(response.data.message || "Failed to add product to cart.");
         setMessageType("error");
@@ -118,12 +125,15 @@ const ProductIntro = ({ data }) => {
           </button>
         </div>
 
-        {/* Message Display */}
         {message && (
-          <div className="fixed inset-0 flex items-center  justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[999999]">
+          <div className="fixed inset-0 flex top-0 bottom-0 left-0 right-0 items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-[999999]">
             <div
-              className={`px-6 py-3 rounded-lg text-white text-sm ${
-                messageType === "success" ? "bg-green-500" : "bg-red-500"
+              className={`px-6 py-3 rounded-lg text-white shadow-sm shadow-gray-400 text-sm ${
+                messageType === "success"
+                  ? "bg-green-500"
+                  : messageType === "warning"
+                  ? "bg-yellow-500"
+                  : "bg-red-500"
               }`}
             >
               {message}

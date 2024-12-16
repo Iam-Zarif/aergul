@@ -15,6 +15,8 @@ import Contact from "../Pages/Contact/Contact";
 import ProductDynamicPage from "../ProductDynamicPage/ProductDynamicPage";
 import AllProducts from "../Pages/AllProducts/AllProducts";
 import { local } from "../Api/LocalApi";
+import ViewCartPage from "../Pages/ViewCartPage/ViewCartPage";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,8 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`${local}/product/newArrival/${params.id}`),
       },
+      {path:"/myCart", element:<ViewCartPage/>},
+      {path:"/about", element:<AboutUs/>},
 
       {
         path: "/auth",

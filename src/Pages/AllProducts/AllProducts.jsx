@@ -16,11 +16,16 @@ const AllProducts = () => {
 
   useEffect(() => {
     const fetchNewArrivals = async () => {
+      const token = localStorage.getItem("token");
       try {
         setLoading(true);
-        const response = await axios.get(`${local}/product/newArrival`, {
-          withCredentials: true,
-        });
+       const response = await axios.get(`${local}/product/newArrival`, {
+         withCredentials: true, // Enable cookies if needed
+         headers: {
+           Authorization: `Bearer ${token}`, // Attach token for authorization
+         },
+       });
+
         setAllProducts(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -37,10 +42,10 @@ const AllProducts = () => {
     if (sort === "price High To Low") return b.offerPrice - a.offerPrice;
     if (sort === "Top Rated")
       return b.reviews[0]?.rating - a.reviews[0]?.rating || 0;
-    return 0; 
+    return 0;
   });
 
-  console.log("All products - ",allProducts)
+  console.log("All products - ", allProducts);
 
   return (
     <div className="mt-24 mb-28">
@@ -69,6 +74,5 @@ const AllProducts = () => {
     </div>
   );
 };
-
 
 export default AllProducts;
