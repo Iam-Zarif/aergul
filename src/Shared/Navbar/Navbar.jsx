@@ -14,8 +14,9 @@ import { local } from "../../Api/LocalApi";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchInputRef = useRef(null);
-  const [cartCount, setcartCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const [dropDown, setDropDown] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false); // State to track scroll position
   const navigate = useNavigate();
   const { profile } = useProfile();
   const location = useLocation();
@@ -69,16 +70,13 @@ const Navbar = () => {
           return;
         }
 
-        const response = await axios.get(
-          `${local}/cart/profile-cart`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${local}/cart/profile-cart`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        setcartCount(response.data.cart.length);
+        setCartCount(response.data.cart.length);
       } catch (error) {
         console.error(
           "Error fetching profile cart:",
@@ -90,6 +88,22 @@ const Navbar = () => {
     fetchProfileCart();
   }, []);
 
+  // Scroll listener for navbar background change
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true); // Add background color when scrolled
+      } else {
+        setIsScrolled(false); // Transparent at the top
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   // Helper function to check if the link is active
   const getLinkClassName = (path) => {
     return location.pathname === path
@@ -98,7 +112,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full fixed top-0 z-[99999] shadow-sm bg-white shadow-gray-300">
+    <div
+      className={`w-full fixed top-0 z-[99999] shadow-sm transition-all duration-500 bg-white`}
+    >
       <div className="2xl:max-w-[95rem] w-full xl:max-w-[80rem] px-6 mx-auto">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-5">
@@ -155,7 +171,7 @@ const Navbar = () => {
               )}
             </div>
 
-            <div className="relative">
+            <div className="relative cursor-pointer">
               <img
                 src={cart}
                 onClick={() => navigate("/myCart")}
