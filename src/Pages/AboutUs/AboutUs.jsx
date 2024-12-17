@@ -66,89 +66,6 @@ const AboutUs = () => {
       </section>
 
       {/* Gallery Section */}
-      <section className="  ">
-        <motion.div
-          className="w-full mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className=" w-full  pb-24 ">
-            <div className="flex items-center flex-col gap-2">
-              <p className="text-lg font-extrabold text-gray-300">
-                Share your setup with
-              </p>
-              <p className="text-4xl font-extrabold">#aergul</p>
-            </div>
-
-            <div className="grid w-full grid-cols-12 gap-4 grid-rows-12 h-[100vh] lg:-mt-12">
-              <div className="col-span-1 cols-start-1 row-start-1 row-span-6 h-full">
-                <img
-                  alt="image"
-                  src={photo}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-4 row-start-3 row-span-4">
-                <img
-                  alt="image"
-                  src={photo1}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-2 row-span-5 row-start-4">
-                <img
-                  alt="image"
-                  src={photo2}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-3 row-span-6 row-start-2">
-                <img
-                  alt="image"
-                  src={photo3}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-4 row-span-6 row-start-1">
-                <img
-                  alt="image"
-                  src={photo4}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-2 row-span-6 row-start-7">
-                <img
-                  alt="image"
-                  src={photo1}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-3 row-span-4 row-start-7">
-                <img
-                  alt="image"
-                  src={photo2}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-3 row-span-3">
-                <img
-                  alt="image"
-                  src={photo3}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-              <div className="col-span-4 row-span-6 row-start-7">
-                <img
-                  alt="image"
-                  src={photo4}
-                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
-                />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
 
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6 text-center">
@@ -283,7 +200,89 @@ const AboutUs = () => {
           </motion.div>
         </motion.div>
       </section>
+      <section className="  ">
+        <motion.div
+          className="w-full mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <div className=" w-full  pb-24 ">
+            <div className="flex items-center flex-col gap-2">
+              <p className="text-lg font-extrabold text-gray-300">
+                Share your setup with
+              </p>
+              <p className="text-4xl font-extrabold">#aergul</p>
+            </div>
 
+            <div className="grid w-full grid-cols-12 gap-4 grid-rows-12 h-[100vh] lg:-mt-12">
+              <div className="col-span-1 cols-start-1 row-start-1 row-span-6 h-full">
+                <img
+                  alt="image"
+                  src={photo}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-4 row-start-3 row-span-4">
+                <img
+                  alt="image"
+                  src={photo1}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-2 row-span-5 row-start-4">
+                <img
+                  alt="image"
+                  src={photo2}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-3 row-span-6 row-start-2">
+                <img
+                  alt="image"
+                  src={photo3}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-4 row-span-6 row-start-1">
+                <img
+                  alt="image"
+                  src={photo4}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-2 row-span-6 row-start-7">
+                <img
+                  alt="image"
+                  src={photo1}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-3 row-span-4 row-start-7">
+                <img
+                  alt="image"
+                  src={photo2}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-3 row-span-3">
+                <img
+                  alt="image"
+                  src={photo3}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+              <div className="col-span-4 row-span-6 row-start-7">
+                <img
+                  alt="image"
+                  src={photo4}
+                  className="h-full w-full object-cover shadow-sm shadow-gray-500 rounded-xl"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
       {/* Team Section */}
       <section className="py-20 px-6">
         <motion.div

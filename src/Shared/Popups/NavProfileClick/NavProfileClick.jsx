@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import FeedbackPopup from "../../../Components/ProfileInfo/FeedbackPopup/FeedbackPopup";
 
-const NavProfileClick = ({ profile, blankUser }) => {
+const NavProfileClick = ({ profile, blankUser,support }) => {
   const [handleFeedback, setHandleFeedback] = useState(false);
   const[handleDIsplay, setHandleDIsplay] = useState(false)
 
@@ -79,6 +79,17 @@ const NavProfileClick = ({ profile, blankUser }) => {
           />
           <p className="text-sm">Display and Accesibility</p>
         </div>
+        <div onClick={toogleHandleDisplay} className="flex w-full   items-center gap-2 px-5 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all">
+          <img
+            src={support}
+            loading="lazy"
+            className="block  w-6 rounded-full object-cover object-top"
+            width={34}
+            alt="Profile"
+          />
+          <p className="text-sm">Get Help</p>
+        </div>
+
         <div
           onClick={toogleHandleFeedback}
           className="flex w-full   items-center gap-2 px-6 py-3 cursor-pointer hover:bg-gray-100 duration-300 transition-all"

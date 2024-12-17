@@ -17,6 +17,10 @@ import AllProducts from "../Pages/AllProducts/AllProducts";
 import { local } from "../Api/LocalApi";
 import ViewCartPage from "../Pages/ViewCartPage/ViewCartPage";
 import AboutUs from "../Pages/AboutUs/AboutUs";
+import SingleItemCheckoutPage from "../Pages/SingleItemCheckoutPage/SingleItemCheckoutPage";
+import SingleitemVisaPaymentPage from "../Pages/SingleitemVisaPaymentPage/SingleitemVisaPaymentPage";
+import SingleItemMasterCardPaymentPage from "../Pages/SingleitemMasterCardPaymentPage/SingleitemMasterCardPaymentPage";
+import SingleItemPayPalPaymentPage from "../Pages/SingleItemPayPalPaymentPage/SingleItemPayPalPaymentPage";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +39,7 @@ export const router = createBrowserRouter([
         path: "/profileInfo",
         element: <ProfileInfo />,
       },
-      { path: "/collections", element:<AllProducts/> },
+      { path: "/collections", element: <AllProducts /> },
       { path: "/profileEdit/edit/basicInfo", element: <ProfileEditPopup /> },
       { path: "/contact", element: <Contact /> },
       {
@@ -44,8 +48,19 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`${local}/product/newArrival/${params.id}`),
       },
-      {path:"/myCart", element:<ViewCartPage/>},
-      {path:"/about", element:<AboutUs/>},
+      { path: "/myCart", element: <ViewCartPage /> },
+      { path: "/about", element: <AboutUs /> },
+      { path: "/checkout", element: <SingleItemCheckoutPage /> },
+      {
+        path: "/singleItemVisaPayment",
+        element: <SingleitemVisaPaymentPage />,
+      },
+      {
+        path: "/singleItemMasterCardPayment",
+        element: <SingleItemMasterCardPaymentPage />,
+      },
+
+ { path: "/singleItemPayPalPayment", element: <SingleItemPayPalPaymentPage /> },
 
       {
         path: "/auth",

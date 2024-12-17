@@ -12,9 +12,13 @@ const isAuthPage =
     "/auth/forgotPass/emailRecap",
     "/auth/register/otp",
     "/myCart",
+    "/checkout",
     "/auth/forgotPass/verify-otp",
     "/auth/forgotPass/confirmPass",
+    "/singleItemMasterCardPayment",
+    "/singleItemPayPalPayment",
     "/profileInfo",
+    "/singleItemVisaPayment",
     "/profileEdit/edit/basicInfo",
   ].includes(location.pathname) || location.pathname.startsWith("/product/");
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../public/white.png";
 import searchIcon from "../../../public/navbar/whiteSearch.png";
+import support from "../../../public/navbar/support.png";
 import blankUser from "../../../public/navbar/blackUser.png";
 import profileArrow from "../../../public/navbar/profileArrow.png";
 import cart from "../../../public/navbar/cart.png";
@@ -16,7 +17,6 @@ const Navbar = () => {
   const searchInputRef = useRef(null);
   const [cartCount, setCartCount] = useState(0);
   const [dropDown, setDropDown] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false); // State to track scroll position
   const navigate = useNavigate();
   const { profile } = useProfile();
   const location = useLocation();
@@ -88,21 +88,7 @@ const Navbar = () => {
     fetchProfileCart();
   }, []);
 
-  // Scroll listener for navbar background change
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true); // Add background color when scrolled
-      } else {
-        setIsScrolled(false); // Transparent at the top
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+ 
 
   // Helper function to check if the link is active
   const getLinkClassName = (path) => {
@@ -202,6 +188,7 @@ const Navbar = () => {
               {dropDown && (
                 <>
                   <NavProfileClick
+                  support={support}
                     profile={profile}
                     blankUser={blankUser}
                     handleDropdown={handleDropdown}
