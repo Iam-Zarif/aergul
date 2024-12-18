@@ -7,6 +7,7 @@ import cashOnDelivery from "../../../public/singleItemProceed/cash-on-delivery.p
 import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
+    
     const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-100 py-10 pt-20 px-4">
