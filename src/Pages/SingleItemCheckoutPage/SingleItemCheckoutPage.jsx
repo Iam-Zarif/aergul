@@ -1,5 +1,5 @@
 import visa from "../../../public/singleItemProceed/visa.png";
-import mastercard from "../../../public/singleItemProceed/mastercard.png";
+import Mastercard from "../../../public/singleItemProceed/mastercard.png";
 import paypal from "../../../public/singleItemProceed/paypal.png";
 import bkash from "../../../public/singleItemProceed/bkash.svg";
 import nagad from "../../../public/singleItemProceed/nagad.png";
@@ -51,28 +51,28 @@ const CheckoutPage = () => {
               onClick={() => navigate("/singleItemVisaPayment")}
               className="flex items-center cursor-pointer justify-center p-4 bg-gray-50 border rounded-lg shadow hover:shadow-md transition-transform transform hover:scale-105"
             >
-              <img src={visa} alt="Visa" className="w-16 h-auto" />
+              <img loading="lazy" src={visa} alt="Visa" className="w-16 h-auto" />
             </div>
             <div
               onClick={() => navigate("/singleItemMasterCardPayment")}
               className="flex items-center cursor-pointer justify-center p-4 bg-gray-50 border rounded-lg shadow hover:shadow-md transition-transform transform hover:scale-105"
             >
-              <img src={mastercard} alt="MasterCard" className="w-16 h-auto" />
+              <img loading="lazy" src={Mastercard} alt="MasterCard" className="w-16 h-auto" />
             </div>
             <div
               onClick={() => navigate("/singleItemPayPalPayment")}
               className="flex items-center cursor-pointer justify-center p-4 bg-gray-50 border rounded-lg shadow hover:shadow-md transition-transform transform hover:scale-105"
             >
-              <img src={paypal} alt="PayPal" className="w-14 h-auto" />
+              <img loading="lazy" src={paypal} alt="PayPal" className="w-14 h-auto" />
             </div>
             <div className="flex items-center cursor-pointer justify-center p-4 bg-gray-50 border rounded-lg shadow hover:shadow-md transition-transform transform hover:scale-105">
-              <img src={bkash} alt="bKash" className="w-24 h-auto" />
+              <img loading="lazy" src={bkash} alt="bKash" className="w-24 h-auto" />
             </div>
             <div className="flex items-center cursor-pointer justify-center p-4 bg-gray-50 border rounded-lg shadow hover:shadow-md transition-transform transform hover:scale-105">
-              <img src={nagad} alt="Nagad" className="w-24 h-auto" />
+              <img loading="lazy" src={nagad} alt="Nagad" className="w-24 h-auto" />
             </div>
             <div className="flex items-center cursor-pointer justify-center p-4 bg-gray-50 border rounded-lg shadow hover:shadow-md transition-transform transform hover:scale-105">
-              <img
+              <img loading="lazy"
                 src={cashOnDelivery}
                 alt="Cash on Delivery"
                 className="w-14 h-auto"
