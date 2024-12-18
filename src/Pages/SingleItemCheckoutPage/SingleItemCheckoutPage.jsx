@@ -1,5 +1,5 @@
 import visa from "../../../public/singleItemProceed/visa.png";
-import Mastercard from "../../../public/singleItemProceed/mastercard.png";
+import Mastercard from "../../../public/singleItemProceed/masterCard.png";
 import paypal from "../../../public/singleItemProceed/paypal.png";
 import bkash from "../../../public/singleItemProceed/bkash.svg";
 import nagad from "../../../public/singleItemProceed/nagad.png";
