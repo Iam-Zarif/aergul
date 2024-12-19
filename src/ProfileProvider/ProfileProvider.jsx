@@ -37,7 +37,7 @@ export const ProfileProvider = ({ children }) => {
         },
         withCredentials: true,
       });
-
+console.log(response)
       const user = response?.data?.user;
       setProfile(user);
     } catch (err) {
