@@ -15,55 +15,37 @@ const ProfileContext = createContext();
 export const useProfile = () => useContext(ProfileContext);
 
 export const ProfileProvider = ({ children }) => {
+  const token = localStorage.getItem("token");
   const [profile, setProfile] = useState(null);
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileError, setProfileError] = useState(null);
 
-  const publicRoutes = useMemo(
-    () => [
-      "/auth/login",
-      "/auth/register",
-      "/auth/register-otp",
-      "/auth/reset-password-email",
-      "/auth/reset-password-otp",
-      "/auth/reset-password-setPassword",
-    ],
-    []
-  );
+  const fetchProfile = useCallback(async () => {
+    setProfileLoading(true);
+    setProfileError(null);
 
-const fetchProfile = useCallback(async () => {
-  setProfileLoading(true);
-  setProfileError(null);
-
-  try {
-    const token = localStorage.getItem("token");
-    const response = await axios.get(`${local}/user/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: true,
-    });
-
-    const user = response?.data?.user;
-    setProfile(user);
-
-    const currentPathname = window.location.pathname;
-    if (user && publicRoutes.includes(currentPathname)) {
-      window.location.href = "/";
-    } else if (!user && !publicRoutes.includes(currentPathname)) {
-      window.location.href = "/auth/login";
+    if (!token) {
+      setProfileError("No token found. Please login.");
+      setProfileLoading(false);
+      return;
     }
-  } catch (err) {
-    setProfileError(err.response?.data?.message || "Failed to fetch profile");
-    const currentPathname = window.location.pathname;
-    if (!publicRoutes.includes(currentPathname)) {
-      window.location.href = "/auth/login";
-    }
-  } finally {
-    setProfileLoading(false);
-  }
-}, [publicRoutes]);
 
+    try {
+      const response = await axios.get(`${local}/user/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
+      const user = response?.data?.user;
+      setProfile(user);
+    } catch (err) {
+      setProfileError(err.response?.data?.message || "Failed to fetch profile");
+    } finally {
+      setProfileLoading(false);
+    }
+  }, [token]);
 
   useEffect(() => {
     fetchProfile();
@@ -97,11 +79,10 @@ const fetchProfile = useCallback(async () => {
   );
 };
 
-// Add display name to avoid ESLint warning
 const ProfileInfoComponent = React.memo(({ profile }) => {
   return <div>{profile?.name}</div>;
 });
 
-ProfileInfoComponent.displayName = "ProfileInfo"; // Adding display name
+ProfileInfoComponent.displayName = "ProfileInfo";
 
 export const ProfileInfo = ProfileInfoComponent;

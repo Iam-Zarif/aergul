@@ -18,6 +18,8 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const Register = () => {
   const navigate = useNavigate();
+      const token = localStorage.getItem("token");
+
   const { googleSignIn, facebookSignIn } = useContext(AuthContext);
   const [preview, setPreview] = useState(null);
   const [name, setName] = useState("");
@@ -30,6 +32,7 @@ const Register = () => {
   const [successMessage, setSuccessMessage] = useState(""); // State for success messages
 
   const handleFacebook = () => {
+
     facebookSignIn()
       .then((res) => {
         const user = res.user;
@@ -57,6 +60,12 @@ const Register = () => {
         userData,
         {
           withCredentials: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "https://aergul-server.vercel.app",
+          },
         }
       );
       console.log(response)
@@ -133,9 +142,19 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post(`${local}/auth/register`, userData, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${local}/auth/register`,
+        userData,
+        {
+          withCredentials: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "https://aergul-server.vercel.app",
+          },
+        }
+      );
       console.log(response);
       if (response.status === 201) {
        
